@@ -1,0 +1,67 @@
+  /*Boton  agregar*/  
+ .content-agregar{
+    margin-left: 80%;
+    padding: 1.5%;
+ }
+/*Formulario*/
+
+#card-form{
+    width: 200rem;
+
+}
+
+.card-header{
+    background: black;
+    color: white;
+    font-weight: bold;
+}
+
+.asterisco{
+    color: red;
+}
+.form-group{
+    font-weight: bold;
+}
+
+/*Estilos tabla*/
+.table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+}
+
+.table th, .table td {
+    font-size: 16px;
+    padding: 8px;
+   
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.table tbody td:hover {
+     background-color: rgba(0, 0, 0, 0.2);
+}
+
+tr:hover td{
+    background-color: #6fa1c8a;
+    color: white;
+}
+thead{
+     border-bottom: solid 5px rgb(0,0,0);
+
+}
+
+
+tr:nth-child(even){
+    background-color: #ddd;
+}
+
+
+tr:hover td .block {
+    
+    color: black;
+    font-weight: bold;
+}
+
+
+
