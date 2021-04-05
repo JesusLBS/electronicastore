@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Session;
+use DataTables;
 
 use App\Models\User;
 use App\Models\marcas;
