@@ -75,11 +75,30 @@ class pedidoscontroller extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'fecha_pedido'        => 'required',
+            'fechaentrega_pedido' => 'required',
+            'hora_pedido'         => 'required',
+            'estatus'             => 'required',
+            'id'                  => 'required',
+        ]);
+
+        $pedidos = new pedidos;
+
+         
+        $pedidos->fecha_pedido          = $request->input('fecha_pedido'); 
+        $pedidos->fechaentrega_pedido   = $request->input('fechaentrega_pedido');
+        $pedidos->hora_pedido           = $request->input('hora_pedido');
+        $pedidos->estatus               = $request->input('estatus');
+        $pedidos->id                    = $request->input('id'); 
+        
+
+           
+        $pedidos->save();
     }
 
     /**
