@@ -24,9 +24,13 @@ class RolSeeder extends Seeder
 	        	
         	],
         	[
-	        	'nombres' => 'vendedor',
+	        	'rol' => 'vendedor',
 	        	
-        	]
+        	],
+            [
+                'rol' => 'gerente',
+                
+            ]
 
         ]);
     }

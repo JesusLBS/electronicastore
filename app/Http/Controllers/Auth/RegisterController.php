@@ -80,7 +80,7 @@ class RegisterController extends Controller
             'img' => 'sinfoto.png',
             'aceptotc_c' => 1,
             'activo' => 1,
-            'id_rol' => 1,
+            'id_rol' => 2,
 
  
         ]); 

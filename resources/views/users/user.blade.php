@@ -1,14 +1,7 @@
-@extends('layouts.argon')
+@extends('layouts.sistema')
 
 @section('contenido')
-
-
-
-
-
-
-
-
+<!------------------------------------------------------------------------------------------------------------------>
 
 
 <div class="titulo-reporte">
@@ -20,443 +13,243 @@
     <!-- Large modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Agregar</button>
     
-</div>
+</div> 
 
-<div class="row">
+
+<!-------------------------------------------------- Formulariio Boton Agregar Modal ---------------------------------------------------------------->
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel"><b>Registro usuario</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--****************************************-->
+<br>
+<br>
+                            <form action="{{route('registeruser')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                <div class="form-group">
+                    <label for="id">Clave del nuevo usuario:
+                     
+                    </label>
+                    <input type="text" name="id" id="id" value="{{$id_sigue}}" readonly="readonly" class="form-control">
+                </div>
+                                
+                <div class="form-group">
+                    <label for="name">Nombre:
+                    <label for="name" class="col-md-1 col-form-label text-md-right asterisco">*</label>
+                      @if($errors->first('name'))
+                      <p class="text-danger">{{$errors->first('name')}}</p>
+                      @endif
+                    </label>
+                <input type="text" name="name" id="name"  value="{{old('name')}}" class="form-control" placeholder="Nombre" tabindex="">
+                </div>
+                <div class="form-group">
+                    <label for="name">Celular:
+                    <label for="name" class="col-md-1 col-form-label text-md-right asterisco">*</label>
+                      @if($errors->first('celular'))
+                      <p class="text-danger">{{$errors->first('celular')}}</p>
+                      @endif
+                    </label>
+                <input type="text" name="celular" id="celular"  value="{{old('celular')}}" class="form-control" placeholder="Celular" tabindex="">
+                </div>
+            
+
+
+                            
+                <div class="form-group">
+                    <label for="email">Email:
+                      <label for="email" class="col-md-1 col-form-label text-md-right asterisco">*</label>
+                      @if($errors->first('email'))
+                      <p class="text-danger">{{$errors->first('email')}}</p>
+                      @endif
+                    </label>
+                    <input type="email" name="email" id="email"  value="{{old('email')}}" class="form-control" placeholder="Email" tabindex="">
+                    
+                </div>
+            
+ 
+
+
+                                
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
+                                </div>
+                                
+
+               <div class="form-group">
+                    <label for="img">Foto de perfil:
+                      @if($errors->first('img'))
+                      <p class="text-danger">{{$errors->first('img')}}</p>
+                      @endif
+                    </label>
+                    <input type="file" name="img" id="img"  value="{{old('img')}}" class="form-control" tabindex="">
+                </div>
+
+
+                <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 form-group">
+                <label for="activo">Activo:</label>
+                <div class="custom-control custom-radio">
+                <input type="radio" id="activo1" name="activo"  value = "1" class="custom-control-input" checked="">
+                <label class="custom-control-label" for="activo1">Si</label>
+                </div>
+                <div class="custom-control custom-radio">
+                <input type="radio" id="activo2" name="activo" value = "0" class="custom-control-input">
+                <label class="custom-control-label" for="activo2">No</label>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 form-group">
+                <label for="dni">Tipo usuario:
+                  
+                </label>
+                <select name = 'id_rol' class="custom-select">
+                  <option selected=""></option>
+                  @foreach($rol as $rolusuario)
+                  <option value="{{$rolusuario->id_rol}}">{{$rolusuario->rol}}</option>
+                  @endforeach
+                  
+                </select>
+              </div>
+        </div>
+
+        <hr>
+                                <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                            <center>   
+                               <button type="submit" id="enviar"  class="btn btn-outline-primary" >
+                                     <b>Registrar</b>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                                
+                            </center>
+                            </div>
+                        </div>
+
+                                
+
+                            </form>
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-------------------------------------------------- End Modal ---------------------------------------------------------------->
+
+
+<!-------------------------------------------------- Tabla de Consulta(Reporte) ---------------------------------------------------------------->
+
+    <div class="container-fluid mt--6">
+      <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
-            <div class="card-header" id="registrarse">
-              <center>
-                Ingrese datos:
-              </center>
+            <div class="card-header border-0">
+              <center><h3 class="mb-0">Usuarios</h3></center>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="Foto">Hola</th>
-                    <th scope="col" class="sort" data-sort="Clave">Clave</th>
-                    <th scope="col" class="sort" data-sort="Nombre usuario">Nombre usuario</th>
-                    <th scope="col" class="sort">Email</th>
-                    <th scope="col" class="sort"><center>Opciones</center></th>
+                    <th>Clave</th>
+                    <th>Avatar</th>
+                    <th>Nombre</th>
+
+                    <th>Email</th>
+                    <th>Celular</th>
+                                        
+                    <th>Opciones</th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @foreach($consulta2 as $user)
+                     @foreach($consulta2 as $user)
                   <tr>
                     <th scope="row">
-                      
-
-                       Hola {{ Auth::user()->name }}
-                  
+                      {{$user->id}}
                     </th>
                     <td class="budget">
-                      
-                      <span class="block">{{$user->id}}</span>
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <span class="block">{{$user->name}}</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="block">{{$user->email}}</span>
-                    </td>
-                    <td class="text-center">
-                     
-                        
-                        <a href="{{route('editar_user',['id'=>$user->id])}}"><button type="button submit" class="btn btn-outline-primary">
-                          
-                            <span class="ti-pencil-alt" title="Editar">
-                                Editar
-                            </span>
+                       <div class="avatar-group">
 
-                        </button></a>
+
+                         <a href="#" class="rounded-circle mr-3" data-toggle="tooltip" title="{{$user->name}}">
+                          <img class="img rounded" with=55 height=55 src="{{asset('archivos/'.$user->img)}}" name="img"> 
+                        </a>
+                        
+                      </div>
                     </td>
+                    <td>
+                      {{$user->name}}
+                    </td>
+                    <td>
+                     {{$user->email}}
+                    </td>
+                    <td>
+                       {{$user->celular}}
+                    </td>
+                    <td>
+                    @if(auth()->user()->id_rol == 1 )
+                      @if($user->deleted_at)
+                        <form id="activaruser" action="{{route('activaruser',['id'=>$user->id])}}" method="POST" enctype="multipart/form-data">
+                                                    {{csrf_field()}}
+                                                    
+                                                    <button type="button submit" class="btn btn-success">Activar</button>
+                        </form>
+                        <form id="borraruser" action="{{route('borraruser',['id'=>$user->id])}}" method="POST" enctype="multipart/form-data">
+                                                    {{csrf_field()}}
+                                                    
+                                                    <button type="button submit" class="btn btn-outline-danger"><i class="fas fa-trash delete pd-seting-ed " title="Eliminar"></i></button>
+                        </form>
+                        @else
+                        <form id="desactivaruser" action="{{route('desactivaruser',['id'=>$user->id])}}" method="POST" enctype="multipart/form-data">
+                                                    {{csrf_field()}}
+                                                    
+                                                    <button type="button submit" class="btn btn-warning">Desactivar</button>
+                        </form>
+                        @endif 
+                         <a href="{{route('editar_user',['id'=>$user->id])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button>
+                         </a>
+                     @else
+                      @if(auth()->user()->id_rol == 4)
+                     <a href="{{route('editar_user',['id'=>$user->id])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button>
+                        </a>
+                        @else
+                        Sin Permisos
+                     @endif   
+                     @endif
+
+                        
+                    </td>
+
                   </tr>
-                  @endforeach
+   @endforeach
                 </tbody>
               </table>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <div class="content">
-            <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <strong class="card-title">Custom Table</strong>
-                            </div>
-                            <div class="table-stats order-table ov-h">
-                                <table class="table ">
-                                    <thead>
-                                        <tr>
-                                            <th class="serial">#</th>
-                                            <th class="avatar">Avatar</th>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Product</th>
-                                            <th>Quantity</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="serial">1.</td>
-                                            <td class="avatar">
-                                                <div class="round-img">
-                                                    <a href="#"><img class="rounded-circle" src="images/avatar/1.jpg" alt=""></a>
-                                                </div>
-                                            </td>
-                                            <td> #5469 </td>
-                                            <td>  <span class="name">Louis Stanley</span> </td>
-                                            <td> <span class="product">iMax</span> </td>
-                                            <td><span class="count">231</span></td>
-                                            <td>
-                                                <span class="badge badge-complete">Complete</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="serial">2.</td>
-                                            <td class="avatar">
-                                                <div class="round-img">
-                                                    <a href="#"><img class="rounded-circle" src="images/avatar/2.jpg" alt=""></a>
-                                                </div>
-                                            </td>
-                                            <td> #5468 </td>
-                                            <td>  <span class="name">Gregory Dixon</span> </td>
-                                            <td> <span class="product">iPad</span> </td>
-                                            <td><span class="count">250</span></td>
-                                            <td>
-                                                <span class="badge badge-complete">Complete</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="serial">3.</td>
-                                            <td class="avatar">
-                                                <div class="round-img">
-                                                    <a href="#"><img class="rounded-circle" src="images/avatar/3.jpg" alt=""></a>
-                                                </div>
-                                            </td>
-                                            <td> #5467 </td>
-                                            <td>  <span class="name">Catherine Dixon</span> </td>
-                                            <td> <span class="product">SSD</span> </td>
-                                            <td><span class="count">250</span></td>
-                                            <td>
-                                                <span class="badge badge-complete">Complete</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="serial">4.</td>
-                                            <td class="avatar">
-                                                <div class="round-img">
-                                                    <a href="#"><img class="rounded-circle" src="images/avatar/4.jpg" alt=""></a>
-                                                </div>
-                                            </td>
-                                            <td> #5466 </td>
-                                            <td>  <span class="name">Mary Silva</span> </td>
-                                            <td> <span class="product">Magic Mouse</span> </td>
-                                            <td><span class="count">250</span></td>
-                                            <td>
-                                                <span class="badge badge-pending">Pending</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div> <!-- /.table-stats -->
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <strong class="card-title">Basic Table</strong>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                          <th scope="col">#</th>
-                                          <th scope="col">First</th>
-                                          <th scope="col">Last</th>
-                                          <th scope="col">Handle</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">Stripped Table</strong>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">Table Dark</strong>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-dark">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">Table Head</strong>
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                      <th scope="col">#</th>
-                                      <th scope="col">First</th>
-                                      <th scope="col">Last</th>
-                                      <th scope="col">Handle</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-
-
-
-
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">Bordered Table</strong>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">Bordered Dark Table</strong>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-dark">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
+            
+          </div>
         </div>
+      </div>
+
+<!-------------------------------------------------- End Tabla de Consulta(Reporte) ---------------------------------------------------------------->
 
 
 
 
 
 
+<!------------------------------------------------------------------------------------------------------------------>
 
 
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
 
 
-@endsection
- 
+@stop

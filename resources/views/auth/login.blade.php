@@ -1,60 +1,132 @@
-@extends('layouts.app')
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ela Admin - HTML5 Admin Template</title>
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" id="logueo"  style="background-image: linear-gradient(to right,  rgb(0, 174, 63), rgb(191, 252, 231)); color: rgb(47, 50, 49);">{{ __('Login') }}</div>
+    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
 
-                <div class="card-body"  style="background-image: linear-gradient(to right,  rgb(0, 174, 63), rgb(191, 252, 231)); font-weight: bold;">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="{{asset('admin/css/style.css')}}">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+     <!-- Bootstrap -->
+        <link type="text/css" rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}"/>   
+
+        <!-- Font Awesome Icon -->
+        <link rel="stylesheet" href="{{asset('assets/css/font-awesome.min.css')}}">
+
+        <!-- Custom stlylesheet -->
+        <link type="text/css" rel="stylesheet" href="{{asset('assets/css/style.css')}}"/>
+
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+</head>
+<body class="bg-dark">
+ @include('include.topheader')
+
+
+ @if ($errors->any())
+<div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <center>
+        
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li><b style="font-size: 1.4em">"{{ $error }}"</b></li>
+                @endforeach
+            </ul>
+    </center>
+</div>
+@endif
+
+
+
+@if(Session::has('mensajessesion'))
+<script>
+        swal("Hola..!","{!!Session::get('mensajessesion')!!}","warning",{
+            button:"OK",
+        })
+</script>
+@endif
+
+    <div class="sufee-login d-flex align-content-center flex-wrap">
+        <div class="container">
+            <div class="login-content">
+                <div class="login-logo">
+                    <a href="index.html">
+                        <center><a href="{{ url('/') }}"><img class="align-content" src="{{asset('admin/images/logo.png')}}" alt=""></a></center>
+                    </a>
+                </div>
+                <div class="login-form">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <div class="form-group row" >
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail ') }}</label>
+                        <div>
+                        <center><h1>Login</h1></center>
+                    </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="email" >{{ __('E-Mail ') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <div class="">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                        <div class="form-group">
+                            <label for="password" class="">{{ __('Password') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <div class="">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
                         </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Entrar') }}
-                                </button>
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}" style="font-weight: bold;">
-                                        {{ __('Olvidaste tu contraseña?') }}
-                                    </a>
-                                @endif
-                            </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Remember Me
+                            </label>
+                            <label class="pull-right">
+                                <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
+                            </label>
+
+                        </div>
+                        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Entrar</button>
+                        
+                        <div class="register-link m-t-15 text-center">
+                            <hr>
+                            <p>¿No tienes cuenta?  <a href="{{ route('register') }}"> Registrate aquí</a></p>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-@endsection
 
 
+
+</body>
+</html>

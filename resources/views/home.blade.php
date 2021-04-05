@@ -1,23 +1,12 @@
-@extends('layouts.argon')
+@extends('layouts.sistema')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Pagina Principal') }}</div>
+@section('contenido')
+<!------------------------------------------------------------------------------------------------------------------>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
-                    {{ __('Te logueaste con exito') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+<h1>Index Electronica</h1>
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+@stop

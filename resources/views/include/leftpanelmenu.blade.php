@@ -1,6 +1,6 @@
-<aside id="left-panel" class="left-panel">
+<aside id="left-panel" class="left-panel" >
         <nav class="navbar navbar-expand-sm navbar-default">
-            <div id="main-menu" class="main-menu collapse navbar-collapse">
+            <div id="main-menu" class="font-weight-bold main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
                         <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
@@ -20,18 +20,42 @@
                             <li><i class="fa fa-th"></i><a href="ui-grids.html">Grids</a></li>
                             <li><i class="fa fa-file-word-o"></i><a href="ui-typgraphy.html">Typography</a></li>
                         </ul>
-                    </li>
+                    </li> 
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tables</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
-                            <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tablas</a>
+                        <ul class="sub-menu children dropdown-menu"> 
+                            @if(auth()->user()->id_rol == 3 )
+                            <li><i class="fa fa-table"></i><a href="{{route('electronica_producto')}}">Productos</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('pcategoria')}}">Categoria de Productos </a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('electronica_proveedor')}}">Proveedores</a></li>                            
+                            <li><i class="fa fa-table"></i><a href="{{route('marca')}}">Marcas</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('razons')}}">Razon Social</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('tfactura')}}">Tipo Factura</a></li>
+                            @else
+                            <li><i class="fa fa-table"></i><a href="{{route('user')}}">Usuarios</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('electronica_empleado')}}">Empleados</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('templeado')}}">Tipo de Empleados</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('cliente')}}">Clientes</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('electronica_producto')}}">Productos</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('pcategoria')}}">Categoria de Productos </a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('electronica_proveedor')}}">Proveedores</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('departamento')}}">Departamentos</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('municipio')}}">Municipios</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('estado')}}">Estados</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('marca')}}">Marcas</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('razons')}}">Razon Social</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('tfactura')}}">Tipo Factura</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{route('via')}}">Vias</a></li>                            
+                            @endif
+                            
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Forms</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Modulos</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
+                            <li><i class="menu-icon fa fa-th"></i><a href="{{route('pedidos')}}">Pedidos</a></li>
+                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Carrito</a></li>
+                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Facturas</a></li>
                             <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
                         </ul>
                     </li>
@@ -66,9 +90,9 @@
                     </li>
                     <li class="menu-title">Extras</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Pages</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Mas Paginas</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
+                            <li><i class="menu-icon fa fa-sign-in"></i><a href="./">Web -TIUniverserStore </a></li>
                             <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
                             <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
                         </ul>

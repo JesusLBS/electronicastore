@@ -17,13 +17,13 @@ use BaconQrCode\Writer as BaconQrCodeWriter;
 use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
-
+ 
 
 use Illuminate\Support\Facades\Log;
 
 use BaconQrCode\Writer;
-
-
+use Illuminate\Support\Facades\Hash;
+use Session;
 
 class LoginController extends Controller
 {
@@ -62,17 +62,26 @@ class LoginController extends Controller
 
 public function login(Request $request)
 {
-    $this->validateLogin($request);
-
+   
+    $this->validate($request,[
+            'email'     => 'required',
+            'password'  => 'required',
+           
+        ]);   
+//    $password = Hash::make($request->password);
+     // dd($request);
+    
     if ($this->hasTooManyLoginAttempts($request)) {
         $this->fireLockoutEvent($request);
 
         return $this->sendLockoutResponse($request);
     }
 
-    $user = User::where($this->username(), '=', $request->email)->first();
-
-    if (password_verify($request->password, optional($user)->password)) {
+    $user = User::where($this->username(), '=', $request->email)
+                  ->where('activo',1)
+                  ->first();
+                  
+   /* if (password_verify($request->password, optional($user)->password)) {
         $this->clearLoginAttempts($request);
 
         $user->update(['token_login' => (new Google2FA)->generateSecretKey()]);
@@ -82,7 +91,17 @@ public function login(Request $request)
         
         return view("auth.2fa", compact('urlQR', 'user'));
     }
-    
+    */ 
+    Auth::login($user);
+          if (auth()->user()->id_rol == 2) {
+              //return "Usuario";
+            Session::flash('mensajelogin',"Hola $user->name Acabas de ingresar exitosamente");
+            return redirect()->intended('/');
+          }
+          else{
+             //return "Eres Admin";
+             return redirect()->intended($this->redirectPath());
+          }
     $this->incrementLoginAttempts($request);
     
     return $this->sendFailedLoginResponse($request);
@@ -129,9 +148,17 @@ public function login2FA(Request $request, User $user)
         //dd($request);
           Log::channel('loginsuccess')->info('El usuario' .$user->name. 'con la clave' . $user->id.'Se logueo e Ingreso exitosamente en el sistema');
           Auth::login($user);
+          if (auth()->user()->id_rol == 2) {
+              //return "Usuario";
+            return redirect()->intended('/');
+          }
+          else{
+             //return "Eres Admin";
+             return redirect()->intended($this->redirectPath());
+          }
 
         
-        return redirect()->intended($this->redirectPath());
+       
         
         
     }

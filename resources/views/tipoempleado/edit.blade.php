@@ -1,0 +1,88 @@
+@extends('layouts.sistema')
+
+@section('contenido')
+<!------------------------------------------------------------------------------------------------------------------>
+
+
+
+<!----------------------------------------------------------------------------------------------->
+      
+<div class="content">
+                <div class="animated fadeIn" style=" margin-left: 15%; margin-right: 8%;">
+
+
+                <div class="row">
+                <div class="col-lg-11">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <strong class="card-title">Modificacion Tipo Empleado</strong>
+                            </div>
+                            <div class="card-body">
+                                <!-- Credit Card -->
+                                <div id="pay-invoice">
+                                    <div class="card-body">
+                                        <div class="card-title">
+                                            <h3 class="text-center">{{$datatempleado['nombre_tipoempleado']}}</h3>
+                                        </div>
+                                        <hr>
+                                        <form action = "{{route('updatetempleado')}}" method = "POST" >
+                                         @method('POST')  
+                                         {{csrf_field()}}   
+<br>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">Clave :</label>
+                            <label for="name" class="col-md-1 col-form-label text-md-right asterisco"></label>                         
+
+                            <div class="col-md-6">
+                                <input id="id_tipo_empleado" type="text" class="form-control" value="{{$datatempleado['id_tipo_empleado']}}" readonly="readonly" name="id_tipo_empleado"  required autocomplete="id_tipo_empleado" autofocus >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">Tipo Empleado:</label>
+                            <label for="name" class="col-md-1 col-form-label text-md-right asterisco">*</label>
+
+                            
+
+                            <div class="col-md-6">
+                                <input id="nombre_tipoempleado" type="text" class="form-control" value="{{$datatempleado['nombre_tipoempleado']}}" name="nombre_tipoempleado"  required autocomplete="name" autofocus>
+                            @if($errors->first('nombre_tipoempleado'))
+                            <p class="text-danger">{{$errors->first('nombre_tipoempleado')}}</p>
+                            @endif
+                            </div>
+                            
+
+                        </div>
+
+        
+
+ 
+<br>
+<br>
+<br>
+<br>
+              
+                        
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-outline-primary">
+                                     Actualizar
+                                </button>
+                                <a href="{{route('templeado')}}">
+                                <button type="button" class="btn btn-outline-danger font-weight-bold">Regresar
+                                </button>
+                               </a>
+                            </div>
+                        </div>
+                    </form> 
+                                    </div>
+                                </div>
+ </div>
+                                </div>
+                            </div>
+                        </div> <!-- .card -->
+
+                    </div><!--/.col-->
+    </div><!-- .content -->
+
+<!------------------------------------------------------------------------------------------------------------------>
+@stop

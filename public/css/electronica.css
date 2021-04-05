@@ -34,22 +34,21 @@
     padding: 8px;
    
 }
-
 .table tbody tr:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
-.table tbody td:hover {
-     background-color: rgba(0, 0, 0, 0.2);
-}
-
 tr:hover td{
     background-color: #6fa1c8a;
-    color: white;
+    color: black;
+    font-weight: bold;
 }
+
 thead{
      border-bottom: solid 5px rgb(0,0,0);
 
 }
+
+
 
 
 tr:nth-child(even){
@@ -57,11 +56,13 @@ tr:nth-child(even){
 }
 
 
-tr:hover td .block {
-    
-    color: black;
-    font-weight: bold;
-}
+
+
+
+
+
+
+
 
 
 
