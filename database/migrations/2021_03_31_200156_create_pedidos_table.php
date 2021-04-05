@@ -16,11 +16,12 @@ class CreatePedidosTable extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id('id_pedido');
 
-            $table->string('fecha_pedido');
-            $table->string('fechaentrega_pedido');
-            $table->string('hora_pedido');
+            $table->date('fecha_pedido');
+            $table->date('fechaentrega_pedido');
+            $table->time('hora_pedido');
             $table->string('estatus');
             $table->string('total');
+            $table->string('total_piezas');
 
 
 

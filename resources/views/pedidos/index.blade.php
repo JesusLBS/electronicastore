@@ -183,6 +183,10 @@
           <div class="col-8 col-sm-3">
             <label for="id">Total:</label>
             <input type="text" name="id" id="id" value="$1800" readonly="readonly" class="form-control">
+          </div> 
+          <div class="col-8 col-sm-3">
+            <label for="id">Total Piezas:</label>
+            <input type="text" name="id" id="id" value="5 Piezas" readonly="readonly" class="form-control">
           </div>          
         </div>
       </div>
@@ -209,19 +213,19 @@
             </div>
             <div class="col-xs-5 col-sm-4 col-md-3">
                 <div class="form-group">
-                    <label for="codigo_postalcliente">Precio:</label>
-                    <input type="text" name="codigo_postalcliente" id="codigo_postalcliente" value="" class="form-control">
+                    <label for="precio">Precio:</label>
+                    <input type="text" name="precio" id="precio" value="" class="form-control">
                 </div>
             </div>
             <div class="col-xs-5 col-sm-4 col-md-3">
                 <div class="form-group">
-                    <label for="codigo_postalcliente">Cantidad:</label>
-                    <input type="text" name="codigo_postalcliente" id="codigo_postalcliente" value="" class="form-control">
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="text" name="cantidad" id="cantidad" value="" class="form-control">
                 </div>
             </div>
              <div class="col-xs-5 col-sm-4 col-md-2">
               <div class="form-group">
-                    <label for="codigo_postalcliente">Agregar</label>
+                    <label for="agregardefinir">Agregar</label>
                 <input type="submit" class="btn btn-outline-primary font-weight-bold"  value="Agregar"/>
                 </div>
             </div>
@@ -329,54 +333,20 @@
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <table class="table align-items-center table-flush">
+              <table id="tablepedidos" class="table table-hover">
                 <thead class="thead-light">
                   <tr>
-                    <th>Clave</th>
+                    <th>Clave P.</th>
                     <th>Cliente</th>
                     <th>Cantidad Productos</th>
-
-                    <th>Fecha Venta</th>
-                    <th>Fecha de entrega</th>
+                    <th>Fecha Pedido</th>
+                    <th>Fecha de Entrega</th>
                     <th>Estatus</th>                    
-                    <th>Opciones</th>
+                    <th style="text-align: center;">Opciones</th>
                   </tr>
                 </thead>
-                <tbody class="list">
-                     
-                  <tr>
-                    <th scope="row">
-                      001
-                    </th>
-                    <td class="budget">
-                       Adriana
-                    </td>
-                    <td>
-                      20 piezas
-                    </td>
-                    <td>
-                     10/10/2021
-                    </td>
-                    <td>
-                       22/11/2021
-                    </td>
-                    <td>
-                    	Entregado
-                    </td>
-                    <td>
-                    
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Definir Pedido</button>
-                     
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detallepedido">Detalles</button>
-    
-                     
-                        
-                    </td>
+                
 
-
-                  </tr>
-
-                </tbody>
               </table>
             </div>
             
@@ -536,6 +506,24 @@
 
 
 <script type="text/javascript">
+  $(document).ready(function(){
+    var tablapedidos = $('#tablepedidos').DataTable({
+      processing:true,
+      serverSide:true,
+      ajax:{
+        url: "{{route('pedidos')}}",
+      },
+      columns:[
+          {data: 'id_pedido'},
+          {data: 'name'},
+          {data: 'total_piezas'},
+          {data: 'fecha_pedido'},
+          {data: 'fechaentrega_pedido'},
+          {data: 'estatus'},
+          {data: 'btn'}
+      ]
+    });
+  });
 </script>
 
 

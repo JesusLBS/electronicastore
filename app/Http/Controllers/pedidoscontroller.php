@@ -29,9 +29,36 @@ class pedidoscontroller extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        
+        if ($request->ajax()) {
+             $users  = User::orderBy('name')->get();
+             $consulta2      = pedidos::withTrashed()->join('users','pedidos.id','=','users.id')
+                                                ->select('pedidos.id_pedido','users.name','pedidos.total_piezas',
+                                                          'pedidos.fecha_pedido','pedidos.fechaentrega_pedido','pedidos.estatus','pedidos.deleted_at')
+                                       ->get();
+            return DataTables::of($consulta2)
+                    ->addColumn('btn','pedidos/actions')
+                    ->rawColumns(['btn'])
+                    ->toJson();
+        }
+       
+        
+
+
+
+
+
+
+
+
+        //return $consulta2;
+        //return Response()->json($consulta2);
         return view('pedidos.index');
+        /*return view('pedidos.index');
+             ->with('users',$users)
+             ->with('consulta2',$consulta2);*/
     }
 
     /**

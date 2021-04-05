@@ -13,7 +13,7 @@ class pedidos extends Model
 
     protected $table="pedidos";
 	protected $primaryKey = 'id_pedido';                 
-    protected $fillable=["id_pedido", "fecha_pedido","fechaentrega_pedido","hora_pedido","estatus","total","id","deleted_at"];
+    protected $fillable=["id_pedido", "fecha_pedido","fechaentrega_pedido","hora_pedido","estatus","total","total_piezas","id","deleted_at"];
 }
 
 

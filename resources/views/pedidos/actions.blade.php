@@ -1,0 +1,2 @@
+<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#staticBackdrop">Definir Pedido</button>
+<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#detallepedido">Detalles</button>
