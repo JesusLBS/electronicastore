@@ -91,6 +91,8 @@
 
 
 <script type="text/javascript">
+//Consulta
+//----------------------------------------------------------------
   $(document).ready(function(){
     var tablapedidos = $('#tablepedidos').DataTable({
       processing:true,
@@ -109,6 +111,50 @@
       ]
     });
   });
+
+
+//Insertar
+//----------------------------------------------------------------
+
+  $('#registropedido').submit(function(e){
+    e.preventDefault();
+
+    var id                  = $('#id').val();
+    var fecha_pedido        = $('#fecha_pedido').val();
+    var fechaentrega_pedido = $('#fechaentrega_pedido').val();
+    var hora_pedido         = $('#hora_pedido').val();
+    var _token              = $("input[name = _token]").val();
+
+    $.ajax({
+      url: "{{route('store')}}",
+      type: "POST",
+      data:{
+        id: id,
+        fecha_pedido: fecha_pedido,
+        fechaentrega_pedido: fechaentrega_pedido,
+        hora_pedido: hora_pedido,
+        _token: _token
+      },
+      success:function(response){
+        if (response) {
+          $('#registropedido')[0].reset();
+          toastr.success('El Registro se ingreso correctamente.','Nuevo Registro',{timeOut:3000});
+          $('#tablepedidos').DataTable().ajax.reload();
+        }
+      }
+    });
+    
+  });
+
+//Modificar
+//----------------------------------------------------------------
+
+
+
+
+//Eliminar
+//----------------------------------------------------------------
+
 </script>
 
 
