@@ -12,8 +12,7 @@
         </button>
       </div>
       <div class="modal-body">
-<form  id="registropedido" method = "POST" enctype="multipart/form-data">  
-                    {{csrf_field()}}
+
 <!------------------------------------------------------------------------------------------------------------------>
     <div class="row">
         <div class="col">
@@ -24,25 +23,25 @@
            
             <div class="col-xs-5 col-sm-4 col-md-4">
                 <div class="form-group">
-                    <label for="pedido">Clave del pedido:
+                    <label for="id">Clave del pedido:
                      
                     </label>
-                    <input type="text" name="pedido" id="pedido" value="001" readonly="readonly" class="form-control">
+                    <input type="text" name="id" id="id" value="001" readonly="readonly" class="form-control">
                 </div>
             </div>
             <div class="col-xs-5 col-sm-4 col-md-4">
                 <div class="form-group">
-                    <label for="">Vendedor:
+                    <label for="id">Vendedor:
                      
                     </label>
-                    <input type="text" name="" id="" value="001" readonly="readonly" class="form-control">
+                    <input type="text" name="id" id="id" value="001" readonly="readonly" class="form-control">
                 </div>
             </div>               
           </div> 
       </div>
     </div>
     </div>
-    </div> 
+    </div>
 
     <div class="row">
         <div class="col">
@@ -52,44 +51,32 @@
 
               <div class="col-xs-5 col-sm-4 col-md-4">
                 <div class="form-group">
-                    <label for="nombre_cliente">Usuario:</label>
-                    <select id="id" name ="id" class="custom-select">
-                    <option selected=""></option>
-                     @foreach($User as $users)
-                    <option value="{{$users->id}}"> {{$users->id}} {{$users->name}}</option>
-                    @endforeach
-                    </select>
-                    @if($errors->first('id'))
-                    <p class="text-danger">{{$errors->first('id')}}</p>
-                    @endif
-                </div>
+                <label for="dni">Seleccione Cliente:</label>
+                <select name = 'id_estado' class="custom-select">
+                  <option selected=""></option>
+                  
+                  <option value=""></option>
+                  
+                </select>
+              </div>
             </div>
              
             <div class="col-xs-5 col-sm-4 col-md-3">
                 <div class="form-group">
-                    <label for="fecha_pedido">Fecha del Pedido:</label>
-                    <input type="date" name="fecha_pedido" id="fecha_pedido" value="" class="form-control">
-                    @if($errors->first('fecha_pedido'))
-                    <p class="text-danger">{{$errors->first('fecha_pedido')}}</p>
-                    @endif
+                    <label for="codigo_postalcliente">Fecha del Pedido:</label>
+                    <input type="date" name="codigo_postalcliente" id="codigo_postalcliente" value="" class="form-control">
                 </div>
             </div>
              <div class="col-xs-5 col-sm-4 col-md-3">
                 <div class="form-group">
-                    <label for="fechaentrega_pedido">Fecha de Entrega:</label>
-                    <input type="date" name="fechaentrega_pedido" id="fechaentrega_pedido" value="" class="form-control">
-                    @if($errors->first('fechaentrega_pedido'))
-                    <p class="text-danger">{{$errors->first('fechaentrega_pedido')}}</p>
-                    @endif
+                    <label for="codigo_postalcliente">Fecha de Entrega:</label>
+                    <input type="date" name="codigo_postalcliente" id="codigo_postalcliente" value="" class="form-control">
                 </div>
             </div>
             <div class="col-xs-5 col-sm-4 col-md-3">
                 <div class="form-group">
-                    <label for="hora_pedido">Hora del Pedido:</label>
-                    <input type="time" name="hora_pedido" id="hora_pedido" value="" class="form-control">
-                    @if($errors->first('hora_pedido'))
-                    <p class="text-danger">{{$errors->first('hora_pedido')}}</p>
-                    @endif
+                    <label for="codigo_postalcliente">Hora del Pedido:</label>
+                    <input type="time" name="codigo_postalcliente" id="codigo_postalcliente" value="" class="form-control">
                 </div>
             </div>
                        
@@ -111,7 +98,6 @@
             </center>
         </div>
     </div> 
-    </form>
     </div>
 </div>
 </div>

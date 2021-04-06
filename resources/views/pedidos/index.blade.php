@@ -92,8 +92,6 @@
 
 
 <script type="text/javascript">
-//Consulta
-//----------------------------------------------------------------
   $(document).ready(function(){
     var tablapedidos = $('#tablepedidos').DataTable({
       processing:true,
@@ -112,6 +110,7 @@
       ]
     });
   });
+<<<<<<< HEAD
 
 
 //Insertar
@@ -189,6 +188,8 @@
 
 
 
+=======
+>>>>>>> parent of 2d83a4c (Accion de agregar es funcional)
 </script>
 
 
