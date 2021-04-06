@@ -89,13 +89,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 /*Pedidos*/
 Route::get('pedidos', [App\Http\Controllers\pedidoscontroller::class, 'index'])->name('pedidos');
-<<<<<<< HEAD
 Route::post('store',[pedidoscontroller::class,'store'])->name('store');
 //Desactivar
 Route::get('desactivarpedido/{id_pedido}',[pedidoscontroller::class,'desactivarpedido'])->name('desactivarpedido');
-=======
-
->>>>>>> parent of 2d83a4c (Accion de agregar es funcional)
 
 
 
