@@ -23,10 +23,10 @@
            
             <div class="col-xs-5 col-sm-4 col-md-4">
                 <div class="form-group">
-                    <label for="id">Clave del pedido:
+                    <label for="idp">Clave del pedido:
                      
                     </label>
-                    <input type="text" name="id" id="id" value="001" readonly="readonly" class="form-control">
+                    <input type="text" name="idp" id="idp" value="001" readonly="readonly" class="form-control">
                 </div>
             </div>
             <div class="col-xs-5 col-sm-4 col-md-4">
