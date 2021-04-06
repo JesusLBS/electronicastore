@@ -26,14 +26,13 @@ class pedidoscontroller extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth'); 
     }
 
     public function index(Request $request)
     {
         
         if ($request->ajax()) {
-<<<<<<< HEAD
 
 
              
@@ -42,26 +41,26 @@ class pedidoscontroller extends Controller
                                                           'pedidos.fecha_pedido','pedidos.fechaentrega_pedido','pedidos.estatus','pedidos.deleted_at')
                                                       ->get();
             return DataTables::of($pedidos)
-=======
-             $users  = User::orderBy('name')->get();
-             $consulta2      = pedidos::withTrashed()->join('users','pedidos.id','=','users.id')
-                                                ->select('pedidos.id_pedido','users.name','pedidos.total_piezas',
-                                                          'pedidos.fecha_pedido','pedidos.fechaentrega_pedido','pedidos.estatus','pedidos.deleted_at')
-                                       ->get();
-            return DataTables::of($consulta2)
->>>>>>> parent of 2d83a4c (Accion de agregar es funcional)
                     ->addColumn('btn','pedidos/actions')
                     ->rawColumns(['btn'])
                     ->toJson();
         }
-       
-        
+
+
+        $User = User::orderBy('id')->select('users.id','users.name')
+                                    ->get();
+        $productos = productos::orderBy('id_producto')->select('productos.id_producto','productos.nombre_producto')
+                                    ->get();
+
+     
 
 
 
         //return $consulta2;
         //return Response()->json($consulta2);
-        return view('pedidos.index');
+        return view('pedidos.index')
+             ->with('User',$User)
+             ->with('productos',$productos);
         /*return view('pedidos.index');
              ->with('users',$users)
              ->with('consulta2',$consulta2);*/
@@ -86,12 +85,16 @@ class pedidoscontroller extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
+
+            'id'                  => 'required',
             'fecha_pedido'        => 'required',
             'fechaentrega_pedido' => 'required',
             'hora_pedido'         => 'required',
-            'estatus'             => 'required',
-            'id'                  => 'required',
+            
         ]);
+
+        //dd($request);
+        
 
         $pedidos = new pedidos;
 
@@ -99,13 +102,13 @@ class pedidoscontroller extends Controller
         $pedidos->fecha_pedido          = $request->input('fecha_pedido'); 
         $pedidos->fechaentrega_pedido   = $request->input('fechaentrega_pedido');
         $pedidos->hora_pedido           = $request->input('hora_pedido');
-        $pedidos->estatus               = $request->input('estatus');
+        $pedidos->estatus               = 'En Proceso';
+        $pedidos->total_piezas          = 'Sin Definir';
         $pedidos->id                    = $request->input('id'); 
-        
+         
 
            
         $pedidos->save();
-<<<<<<< HEAD
         return back();
 
         
@@ -118,8 +121,6 @@ class pedidoscontroller extends Controller
         $data->delete();
 
         return back();
-=======
->>>>>>> parent of 2d83a4c (Accion de agregar es funcional)
     }
 
     /**
