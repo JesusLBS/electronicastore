@@ -29,16 +29,16 @@
     <div class="container-fluid mt--6">
 
 
-    	<!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+      <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
 
-		    <div class="content-agregar">
+        <div class="content-agregar">
              <!-- Large modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarpedido">Nuevo Pedido</button>
     
         </div> 
 
 
-		<!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+    <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
 
       <div class="row">
         <div class="col">
@@ -92,6 +92,8 @@
 
 
 <script type="text/javascript">
+//Consulta
+//----------------------------------------------------------------
   $(document).ready(function(){
     var tablapedidos = $('#tablepedidos').DataTable({
       processing:true,
@@ -110,7 +112,6 @@
       ]
     });
   });
-<<<<<<< HEAD
 
 
 //Insertar
@@ -150,7 +151,7 @@
 
 //Desactivar
 //----------------------------------------------------------------
-  var id_pedido;
+  var id_pedido; 
 
   $(document).on('click','.desactivarpedido',function(){
     id_pedido =$(this).attr('id_pedido');
@@ -188,8 +189,6 @@
 
 
 
-=======
->>>>>>> parent of 2d83a4c (Accion de agregar es funcional)
 </script>
 
 
