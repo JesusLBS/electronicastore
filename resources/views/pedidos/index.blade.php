@@ -37,6 +37,7 @@
     
         </div> 
 
+
 		<!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
 
       <div class="row">
@@ -71,7 +72,7 @@
 
 <!-------------------------------------------------- End Tabla de Consulta(Reporte) ---------------------------------------------------------------->
 
-
+@include('pedidos.mdesactivarp')
 <!-------------------------------------------------- Contenidos Boton Modal Detalle Pedido ---------------------------------------------------------------->
 
 @include('pedidos.detalle')
@@ -146,14 +147,47 @@
     
   });
 
+
+
+//Desactivar
+//----------------------------------------------------------------
+  var id_pedido;
+
+  $(document).on('click','.desactivarpedido',function(){
+    id_pedido =$(this).attr('id_pedido');
+    $('#mdesactivarp').modal('show');
+  });
+
+  $('#btndesactivarp').click(function(){
+    $.ajax({
+      url:"desactivarpedido/"+id_pedido,
+      beforeSend:function(){
+        $('#btndesactivarp').text('Desactivando Pedido....');
+      },
+      success:function(data){
+        setTimeout(function(){
+          $('#mdesactivarp').modal('hide');
+          toastr.warning('El Pedido se desactivo correctamente.','Desactivacion Pedido',{timeOut:3000});
+          $('#tablepedidos').DataTable().ajax.reload();
+        }, 2000);
+        $('#btndesactivarp').text('Desactivar');
+      }
+    });
+  });
+
+
+
+
+
+
 //Modificar
 //----------------------------------------------------------------
 
 
 
 
-//Eliminar
-//----------------------------------------------------------------
+
+
 
 </script>
 

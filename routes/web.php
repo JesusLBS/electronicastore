@@ -90,7 +90,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 /*Pedidos*/
 Route::get('pedidos', [App\Http\Controllers\pedidoscontroller::class, 'index'])->name('pedidos');
 Route::post('store',[pedidoscontroller::class,'store'])->name('store');
-
+//Desactivar
+Route::get('desactivarpedido/{id_pedido}',[pedidoscontroller::class,'desactivarpedido'])->name('desactivarpedido');
 
 
 

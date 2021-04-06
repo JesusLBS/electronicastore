@@ -36,11 +36,11 @@ class pedidoscontroller extends Controller
 
 
              
-             $consulta2      = pedidos::withTrashed()->join('users','pedidos.id','=','users.id')
+             $pedidos      = pedidos::withTrashed()->join('users','pedidos.id','=','users.id')
                                                      ->select('pedidos.id_pedido','users.name','pedidos.total_piezas',
                                                           'pedidos.fecha_pedido','pedidos.fechaentrega_pedido','pedidos.estatus','pedidos.deleted_at')
                                                       ->get();
-            return DataTables::of($consulta2)
+            return DataTables::of($pedidos)
                     ->addColumn('btn','pedidos/actions')
                     ->rawColumns(['btn'])
                     ->toJson();
@@ -53,11 +53,6 @@ class pedidoscontroller extends Controller
                                     ->get();
 
      
-
-
-
-
-
 
 
 
@@ -124,7 +119,6 @@ class pedidoscontroller extends Controller
         // Desactivacion
         $data = pedidos::find($id_pedido); 
         $data->delete();
-        //Session::flash('mensajed',"La marca ha sido Desactivada correctamente");
 
         return back();
     }
