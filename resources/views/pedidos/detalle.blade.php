@@ -18,20 +18,20 @@
         <h5 class="modal-title" id=""><b>Detalles</b></h5>
         <div class="row">
           <div class="col-8 col-sm-3">
-            <label for="id">Cliente:</label>
-            <input type="text" name="id" id="id" value="Adriana" readonly="readonly" class="form-control">
+            <label for="name">Cliente:</label>
+            <input type="text" name="name" id="name" value="Adriana" readonly="readonly" class="form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="id">Fecha:</label>
-            <input type="text" name="id" id="id" value="0/12/2021" readonly="readonly" class="form-control">
+            <label for="fecha">Fecha:</label>
+            <input type="text" name="fecha" id="fecha" value="0/12/2021" readonly="readonly" class="form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="id">Hora:</label>
-            <input type="text" name="id" id="id" value="13:00:25 pm" readonly="readonly" class="form-control">
+            <label for="fechaentrega">Hora:</label>
+            <input type="text" name="fechaentrega" id="fechaentrega" value="13:00:25 pm" readonly="readonly" class="form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="id">Total:</label>
-            <input type="text" name="id" id="id" value="$1800" readonly="readonly" class="form-control">
+            <label for="total">Total:</label>
+            <input type="text" name="total" id="total" value="$1800" readonly="readonly" class="form-control">
           </div>          
         </div>
       </div>

@@ -15,29 +15,29 @@
         <div class="row">
       <div class="col-sm-12">
         <h5 class="modal-title" id=""><b>Detalles</b></h5>
-        <label for="id">Clave de pedido</label>
-        <input type="text" name="id" id="id" value="001" readonly="readonly" class="form-control">
+        <label for="clave">Clave de pedido</label>
+        <input type="text" name="clave" id="clave" value="001" readonly="readonly" class="form-control">
         
         <div class="row">
           <div class="col-8 col-sm-3">
-            <label for="id">Cliente:</label>
-            <input type="text" name="id" id="id" value="Adriana" readonly="readonly" class="form-control">
+            <label for="nameu">Cliente:</label>
+            <input type="text" nameu="nameu" id="nameu" value="Adriana" readonly="readonly" class="form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="id">Fecha:</label>
-            <input type="text" name="id" id="id" value="01/01/2021" readonly="readonly" class="form-control">
+            <label for="fechapedidou">Fecha:</label>
+            <input type="text" name="fechapedidou" id="fechapedidou" value="01/01/2021" readonly="readonly" class="form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="id">Hora:</label>
-            <input type="text" name="id" id="id" value="13:12:22 pm" readonly="readonly" class="form-control">
+            <label for="fechaentregau">Hora:</label>
+            <input type="text" name="fechaentregau" id="fechaentregau" value="13:12:22 pm" readonly="readonly" class="form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="id">Total:</label>
-            <input type="text" name="id" id="id" value="$1800" readonly="readonly" class="form-control">
+            <label for="totalu">Totalu:</label>
+            <input type="text" name="totalu" id="totalu" value="$1800" readonly="readonly" class="form-control">
           </div> 
           <div class="col-8 col-sm-3">
-            <label for="id">Total Piezas:</label>
-            <input type="text" name="id" id="id" value="5 Piezas" readonly="readonly" class="form-control">
+            <label for="cpiezas">Total Piezas:</label>
+            <input type="text" name="cpiezas" id="cpiezas" value="5 Piezas" readonly="readonly" class="form-control">
           </div>          
         </div>
       </div>
