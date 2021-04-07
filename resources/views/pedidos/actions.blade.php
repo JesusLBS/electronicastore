@@ -11,4 +11,4 @@
 
 
 
-<button type="button" id="'.$pedidos->id_pedido.'" name="desactivarpedido" class="desactivarpedido btn btn-danger  btn-sm" >Desactivar</button>
+<button type="button" id="'.$data->id_pedido.'" name="desactivarpedido" class="desactivarpedido btn btn-danger  btn-sm" >Desactivar</button>
