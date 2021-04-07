@@ -19,7 +19,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Estas Seguro de desactivar el pedido seleccionado con la clave ?
+        Estas Seguro de desactivar el pedido seleccionado con la clave?
 <br><br>
 
       <div class="form-group row mb-0 ">
@@ -28,8 +28,7 @@
            <br>
             <center>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-           
-              <input  type="submit" id="btndesactivarp" name="btndesactivarp" class="btn btn-outline-danger font-weight-bold"  value="Desactivar"/>
+              <button type="button" name="btndesactivarp" id="btndesactivarp" class="btn btn-outline-danger" >Desactivar</button>
             </center>
         </div>
     </div> 
