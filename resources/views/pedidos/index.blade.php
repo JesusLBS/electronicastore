@@ -99,7 +99,7 @@
       processing:true,
       serverSide:true,
       ajax:{
-        url: "{{route('pedidos')}}",
+        url: "{{route('pedidos.index')}}",
       },
       columns:[
           {data: 'id_pedido'},
@@ -127,7 +127,7 @@
     var _token              = $("input[name = _token]").val();
 
     $.ajax({
-      url: "{{route('store')}}",
+      url: "{{route('pedidos.store')}}",
       type: "POST",
       data:{
         id: id,
@@ -147,24 +147,32 @@
     
   });
 
-
-
 //Desactivar
 //----------------------------------------------------------------
-  var id_pedido; 
 
-  $(document).on('click','.desactivarpedido',function(){
-    id_pedido =$(this).attr('id_pedido');
+ 
+
+  $(document).on('click', '.desactivarpedido',function(){
+    fila = $(this);
+    pedido = parseInt($(this).closest('tr').find('td:eq(0)').text());
+    //console.table(pedido);
     $('#mdesactivarp').modal('show');
-  });
+   });
 
   $('#btndesactivarp').click(function(){
+    
     $.ajax({
-      url:"desactivarpedido/"+id_pedido,
+
+      url: "pedidos/desactivarpedido/"+pedido,
+      
+      datatype: "json",
+      //data: {pedido:pedido},
+      
       beforeSend:function(){
         $('#btndesactivarp').text('Desactivando Pedido....');
       },
       success:function(data){
+        //tablepedidos.row(fila.parents('tr')).remove().draw();
         setTimeout(function(){
           $('#mdesactivarp').modal('hide');
           toastr.warning('El Pedido se desactivo correctamente.','Desactivacion Pedido',{timeOut:3000});
@@ -174,10 +182,6 @@
       }
     });
   });
-
-
-
-
 
 
 //Modificar
