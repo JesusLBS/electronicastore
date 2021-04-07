@@ -32,8 +32,8 @@
             <input type="text" name="fechaentregau" id="fechaentregau" value="13:12:22 pm" readonly="readonly" class="form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="totalu">Totalu:</label>
-            <input type="text" name="totalu" id="totalu" value="$1800" readonly="readonly" class="form-control">
+            <label for="Total">Total:</label>
+            <input type="text" name="Total" id="Total" value="$1800" readonly="readonly" class="form-control">
           </div> 
           <div class="col-8 col-sm-3">
             <label for="cpiezas">Total Piezas:</label>
