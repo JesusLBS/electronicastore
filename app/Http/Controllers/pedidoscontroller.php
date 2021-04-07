@@ -34,16 +34,36 @@ class pedidoscontroller extends Controller
         
         if ($request->ajax()) {
 
-
+ 
              
-             $pedidos      = pedidos::withTrashed()->join('users','pedidos.id','=','users.id')
+             $data      = pedidos::withTrashed()->join('users','pedidos.id','=','users.id')
                                                      ->select('pedidos.id_pedido','users.name','pedidos.total_piezas',
                                                           'pedidos.fecha_pedido','pedidos.fechaentrega_pedido','pedidos.estatus','pedidos.deleted_at')
                                                       ->get();
-            return DataTables::of($pedidos)
-                    ->addColumn('btn','pedidos/actions')
+            return DataTables::of($data)
+                    ->addColumn('btn',function($data){
+
+                        $btn = '&nbsp;';
+
+                        if ($data->deleted_at) {
+                            $btn .= '<button type="button" name=""  id="'.$data->id_pedido.'" class=" btn btn-success  btn-sm" >Activar</button>';
+                            $btn .= '&nbsp;&nbsp';
+                            $btn .= '<button type="button" name=""  id="'.$data->id_pedido.'" class=" btn btn-danger  btn-sm" >Eliminar</button>';
+                        }else{
+                            $btn .= '<button type="button" class="btn btn-primary  btn-sm" data-toggle="modal" data-target="#staticBackdrop">Definir Pedido</button>';
+                            $btn .= '&nbsp;&nbsp';
+                            $btn .= '<button type="button" class="btn btn-primary  btn-sm" data-toggle="modal" data-target="#detallepedido">Detalles</button>';
+                            $btn .= '&nbsp;&nbsp';
+                            $btn .= '<button type="button" name="desactivarpedido"  id="'.$data->id_pedido.'" class="desactivarpedido btn btn-danger  btn-sm" >Desactivar</button>';
+                        }
+                        
+                        
+                        
+
+                        return $btn;
+                    })
                     ->rawColumns(['btn'])
-                    ->toJson();
+                    ->make(true);
         }
 
 
@@ -114,10 +134,10 @@ class pedidoscontroller extends Controller
         
     }
 
-    public function desactivarpedido($id_pedido)
+    public function desactivarpedido($pedido)
     {
         // Desactivacion
-        $data = pedidos::find($id_pedido); 
+        $data = pedidos::findorFail($pedido); 
         $data->delete();
 
         return back();
@@ -163,8 +183,19 @@ class pedidoscontroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    /*$fun = $_POST["funcion"];
+
+    switch ($fun) {
+        case 'funeliminar': destroy();
+            
+            break;
+    }*/
+
+    public function destroy($pedido)
     {
-        //
+        $data = pedidos::findorFail($pedido); 
+        $data->delete();
+
+        return back();
     }
 }
