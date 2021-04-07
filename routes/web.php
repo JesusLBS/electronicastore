@@ -88,16 +88,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 /*Pedidos*/
-Route::get('pedidos', [App\Http\Controllers\pedidoscontroller::class, 'index'])->name('pedidos');
-Route::post('store',[pedidoscontroller::class,'store'])->name('store');
+/*Route::resources([
+    'pedidos' => pedidoscontroller::class,
+    
+]);
+*/
+
+
+
+/*Pedidos*/
+Route::get('pedidos', [App\Http\Controllers\pedidoscontroller::class, 'index'])->name('pedidos.index');
+Route::post('store',[pedidoscontroller::class,'store'])->name('pedidos.store');
 //Desactivar
-Route::get('desactivarpedido/{id_pedido}',[pedidoscontroller::class,'desactivarpedido'])->name('desactivarpedido');
-
-
-
-
-
-
+Route::get('/pedidos/desactivarpedido/{pedido}', [App\Http\Controllers\pedidoscontroller::class, 'desactivarpedido'])->name('pedidos.desactivarpedido');
 
 
 
