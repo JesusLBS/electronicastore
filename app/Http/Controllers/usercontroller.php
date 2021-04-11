@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Session;
 use Auth;
 
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class usercontroller extends Controller
@@ -33,7 +35,7 @@ class usercontroller extends Controller
 
         $rol = roles::orderBy('rol')->get();
         $consulta2 = User::withTrashed()->join('roles','roles.id_rol','=','users.id_rol')
-                                        ->select('users.id','users.name','users.email','users.celular','users.img','users.deleted_at','roles.rol','roles.id_rol')
+                                        ->select('users.id','users.name','users.email','users.password','users.celular','users.img','users.deleted_at','roles.rol','roles.id_rol')
 
                                        ->get();
 
@@ -50,6 +52,8 @@ class usercontroller extends Controller
         ->with('id_sigue',$id_sigue)
         ->with('rol',$rol)
         ->with('consulta2',$consulta2);
+
+
     }
 
     public function desactivaruser($id)
@@ -134,15 +138,15 @@ class usercontroller extends Controller
          
         $newuser->name          = $request->input('name'); 
         $newuser->email         = $request->input('email'); 
-        $newuser->password      = $request->input('password'); 
+        
         $newuser->aceptotc_c    = 1;
         $newuser->celular       = $request->input('celular');
         $newuser->activo        = $request->input('activo');
         $newuser->id_rol        = $request->input('id_rol'); 
         $newuser->img           = $img2;
  
-        $newuser->password = Hash::make($request->password); 
- 
+        
+        $newuser->password = Crypt::encryptString($request->password);  
            
         $newuser->save();
 
