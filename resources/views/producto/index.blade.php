@@ -87,7 +87,7 @@
                         <form id="borrarproducto" action="{{route('borrarproducto',['id_producto'=>$producto->id_producto])}}" method="POST" enctype="multipart/form-data">
                                                     {{csrf_field()}}
                                                     
-                                                    <button type="button submit" class="btn btn-outline-danger"><i class="fas fa-trash delete pd-seting-ed " title="Eliminar"></i></button>
+                                                    <button type="button submit" class="btn btn-outline-danger">Eliminar</button>
                         </form>
                         @else
                         <form id="desactivarproducto" action="{{route('desactivarproducto',['id_producto'=>$producto->id_producto])}}" method="POST" enctype="multipart/form-data">
@@ -96,10 +96,10 @@
                                                     <button type="button submit" class="btn btn-warning">Desactivar</button>
                         </form> 
                         @endif  
-                        <a href="{{route('editar_producto',['id_producto'=>$producto->id_producto])}}"><button type="button submit" class="btn btn-outline-primary"><i class="far fa-edit edit" title="Editar"></i></button></a>
+                        <a href="{{route('editar_producto',['id_producto'=>$producto->id_producto])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button></a>
                         @else
                          @if(auth()->user()->id_rol == 4)
-                        <a href="{{route('editar_producto',['id_producto'=>$producto->id_producto])}}"><button type="button submit" class="btn btn-outline-primary"><i class="ti-pencil-alt" title="Editar">Editar</i></button></a>
+                        <a href="{{route('editar_producto',['id_producto'=>$producto->id_producto])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button></a>
                         @else
                         Sin Permisos 
                      @endif   

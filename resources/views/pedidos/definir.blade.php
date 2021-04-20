@@ -53,14 +53,17 @@
         <div class="row">
             <div class="col-xs-5 col-sm-4 col-md-4">
                 <div class="form-group">
-                <label for="dni">Seleccione Producto:</label>
-                <select name = 'id_estado' class="custom-select">
-                  <option selected=""></option>
-                  
-                  <option value=""></option>
-                  
-                </select>
-              </div>
+                    <label for="nombre_cliente">Seleccione Producto:</label>
+                    <select id="id_producto" name ="id_producto" class="custom-select">
+                    <option selected=""></option>
+                     @foreach($productos as $producto)
+                    <option value="{{$producto->id_producto}}"> {{$producto->id}} {{$producto->nombre_producto}}</option>
+                    @endforeach
+                    </select>
+                    @if($errors->first('id_producto'))
+                    <p class="text-danger">{{$errors->first('id_producto')}}</p>
+                    @endif
+                </div>
             </div>
             <div class="col-xs-5 col-sm-4 col-md-3">
                 <div class="form-group">

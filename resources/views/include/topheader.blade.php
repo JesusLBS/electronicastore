@@ -38,13 +38,14 @@
                         @if(auth()->user()->id_rol !=2 )
                         <li><a href="{{ route('home') }}">Puedo ir al Sistema :)</a></li>
                         @else
+                         <li><a href="#"><i class="fa fa-user-o"></i>Estoy Loguedo en la web Soy un cliente </a></li>
                         @endif
                         <!------------------------------------------------------------*----------------------------------------------------------->
-                        <li><a href="#"><i class="fa fa-user-o"></i>Estoy Loguedo en la web Hola </a></li>
+                       
                         @else
-                        <li><a href="{{ route('login') }}" class="text-sm text-gray-700 underline"><i class="fa fa-user-o"></i>Log in</a></li>
+                        <li><a href="{{ route('login') }}" class="text-sm text-gray-700 underline"><i class="fa fa-user-o"></i>Login</a></li>
                         @if (Route::has('register'))
-                        <li><a href="{{ route('register') }}" class="text-sm text-gray-700 underline"><i class="fa fa-user-o"></i>Register</a></li>
+                        <li><a href="{{ route('register') }}" class="text-sm text-gray-700 underline"><i class="fa fa-user-o"></i>Registrarse</a></li>
 
                         @endif
                     @endauth

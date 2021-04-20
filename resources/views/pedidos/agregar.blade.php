@@ -35,7 +35,7 @@
                     <label for="">Vendedor:
                      
                     </label>
-                    <input type="text" name="" id="" value="001" readonly="readonly" class="form-control">
+                    <input type="text" name="" id="" value="{{ Auth::user()->name}}" readonly="readonly" class="form-control">
                 </div>
             </div>               
           </div> 
@@ -52,7 +52,7 @@
 
               <div class="col-xs-5 col-sm-4 col-md-4">
                 <div class="form-group">
-                    <label for="nombre_cliente">Usuario:</label>
+                    <label for="nombre_cliente">Cliente:</label>
                     <select id="id" name ="id" class="custom-select">
                     <option selected=""></option>
                      @foreach($User as $users)

@@ -31,7 +31,7 @@ class pedidoscontroller extends Controller
 
     public function index(Request $request)
     {
-        
+         
         if ($request->ajax()) {
 
  
@@ -54,7 +54,7 @@ class pedidoscontroller extends Controller
                             $btn .= '&nbsp;&nbsp';
                             $btn .= '<button type="button" class="btn btn-primary  btn-sm" data-toggle="modal" data-target="#detallepedido">Detalles</button>';
                             $btn .= '&nbsp;&nbsp';
-                            $btn .= '<button type="button" name="desactivarpedido"  id="'.$data->id_pedido.'" class="desactivarpedido btn btn-danger  btn-sm" >Desactivar</button>';
+                            $btn .= '<button type="button" name="desactivarpedido" id="'.$data->id_pedido.'" class="desactivarpedido btn btn-danger btn-sm" data-toggle="modal" data-target="#mdesactivarp">Desactivar</button>';
                         }
                         
                         
@@ -125,7 +125,7 @@ class pedidoscontroller extends Controller
         $pedidos->estatus               = 'En Proceso';
         $pedidos->total_piezas          = 'Sin Definir';
         $pedidos->id                    = $request->input('id'); 
-         
+          
 
            
         $pedidos->save();
@@ -134,6 +134,14 @@ class pedidoscontroller extends Controller
         
     }
 
+    public function activarpedido($id_pedido)
+    {
+        // Activacion
+        pedidos::withTrashed()->where('id_pedido',$id_pedido)->restore();
+
+        return back();
+    }
+ 
     public function desactivarpedido($pedido)
     {
         // Desactivacion

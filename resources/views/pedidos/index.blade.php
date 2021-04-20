@@ -37,7 +37,7 @@
     
         </div> 
 
-
+ 
     <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
 
       <div class="row">
@@ -116,8 +116,7 @@
 
 //Insertar
 //----------------------------------------------------------------
-
-  $('#registropedido').submit(function(e){
+ $('#registropedido').submit(function(e){
     e.preventDefault();
 
     var id                  = $('#id').val();
@@ -144,19 +143,17 @@
         }
       }
     });
-    
+
   });
 
+ 
 //Desactivar
 //----------------------------------------------------------------
-
- 
-
   $(document).on('click', '.desactivarpedido',function(){
     fila = $(this);
-    pedido = parseInt($(this).closest('tr').find('td:eq(0)').text());
-    //console.table(pedido);
-    $('#mdesactivarp').modal('show');
+    pedido = parseInt($(this).closest('tr').text());
+    console.table(pedido);
+    
    });
 
   $('#btndesactivarp').click(function(){
@@ -166,15 +163,13 @@
       url: "pedidos/desactivarpedido/"+pedido,
       
       datatype: "json",
-      //data: {pedido:pedido},
+      
       
       beforeSend:function(){
         $('#btndesactivarp').text('Desactivando Pedido....');
       },
       success:function(data){
-        //tablepedidos.row(fila.parents('tr')).remove().draw();
         setTimeout(function(){
-          $('#mdesactivarp').modal('hide');
           toastr.warning('El Pedido se desactivo correctamente.','Desactivacion Pedido',{timeOut:3000});
           $('#tablepedidos').DataTable().ajax.reload();
         }, 2000);

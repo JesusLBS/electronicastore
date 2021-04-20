@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 class RegisterController extends Controller
 {
     /*
@@ -55,7 +57,7 @@ class RegisterController extends Controller
             'email'       => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'    => ['required', 'string', 'min:3', 'confirmed'], 
             'aceptotc_c'  => ['required'],
-            'celular'      => 'required|regex:/^[0-9]{10}$/',
+            'celular'     => 'required|regex:/^[0-9]{10}$/',
 
         ]);
     }
@@ -75,7 +77,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'celular' => $data['celular'],
-            'password' => Hash::make($data['password']),
+            'password' => Crypt::encryptString($data['password']),
+    //        'password' => Hash::make($data['password']),
  //            'password' => hash("sha256",$data['password']),
             'img' => 'sinfoto.png',
             'aceptotc_c' => 1,
@@ -84,12 +87,6 @@ class RegisterController extends Controller
 
  
         ]); 
-
-
-
-
-
-
     }
 }
 

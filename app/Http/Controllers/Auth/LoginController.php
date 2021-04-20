@@ -81,7 +81,7 @@ public function login(Request $request)
                   ->where('activo',1)
                   ->first();
                   
-   /* if (password_verify($request->password, optional($user)->password)) {
+    if (password_verify($request->password, optional($user)->password)) {
         $this->clearLoginAttempts($request);
 
         $user->update(['token_login' => (new Google2FA)->generateSecretKey()]);
@@ -91,7 +91,7 @@ public function login(Request $request)
         
         return view("auth.2fa", compact('urlQR', 'user'));
     }
-    */ 
+    
     Auth::login($user);
           if (auth()->user()->id_rol == 2) {
               //return "Usuario";

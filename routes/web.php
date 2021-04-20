@@ -102,6 +102,9 @@ Route::post('store',[pedidoscontroller::class,'store'])->name('pedidos.store');
 //Desactivar
 Route::get('/pedidos/desactivarpedido/{pedido}', [App\Http\Controllers\pedidoscontroller::class, 'desactivarpedido'])->name('pedidos.desactivarpedido');
 
+//Activacion
+Route::get('/pedidos/activarpedido/{id_pedido}', [App\Http\Controllers\pedidoscontroller::class, 'activarpedido'])->name('pedidos.activarpedido');
+
 
 
 

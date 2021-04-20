@@ -166,6 +166,7 @@
                     <th>Nombre</th>
 
                     <th>Email</th>
+                    <th>Password</th>
                     <th>Celular</th>
                                         
                     <th>Opciones</th>
@@ -194,6 +195,10 @@
                      {{$user->email}}
                     </td>
                     <td>
+                     
+                     {{Crypt::decryptString($user->password)}}
+                    </td>
+                    <td>
                        {{$user->celular}}
                     </td>
                     <td>
@@ -207,7 +212,7 @@
                         <form id="borraruser" action="{{route('borraruser',['id'=>$user->id])}}" method="POST" enctype="multipart/form-data">
                                                     {{csrf_field()}}
                                                     
-                                                    <button type="button submit" class="btn btn-outline-danger"><i class="fas fa-trash delete pd-seting-ed " title="Eliminar"></i></button>
+                                                    <button type="button submit" class="btn btn-outline-danger">Eliminar</button>
                         </form>
                         @else
                         <form id="desactivaruser" action="{{route('desactivaruser',['id'=>$user->id])}}" method="POST" enctype="multipart/form-data">

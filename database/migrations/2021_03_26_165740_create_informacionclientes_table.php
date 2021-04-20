@@ -40,7 +40,7 @@ class CreateInformacionclientesTable extends Migration
             $table->foreign('id_via')->references('id_via')->on('vias');
 
             $table->unsignedBigInteger('id');
-            $table->foreign('id')->references('id')->on('users'); 
+            $table->foreign('id')->references('id')->on('users')->nullable(); 
 
             
             $table->timestamp('deleted_at')->nullable();       
