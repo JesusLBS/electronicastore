@@ -8,10 +8,10 @@ use App\Models\User;
 use App\Models\estados;
 use App\Models\municipios;
 use App\Models\tipoempleados;
-
+use DataTables;
 use App\Models\departamentos;
 use Session;
-
+use PDF;
 
 
 
@@ -30,19 +30,77 @@ class empleadoscontroller extends Controller
         $this->middleware('auth');
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        
+        /*
         $departamentos  = departamentos::orderBy('nombre_departamento')->get();
         $consulta2      = empleados::withTrashed()->join('departamentos','empleados.id_departamento','=','departamentos.id_departamento')
                                              ->select('empleados.id_empleado','empleados.nombre_empleado','empleados.deleted_at','departamentos.nombre_departamento')
                                        ->get();
-        //return $id_sigue;
         return view ('empleado/index')
              ->with('departamentos',$departamentos)
              ->with('consulta2',$consulta2);
+             */
+
+        //Start Datatables with ajax
+
+             if ($request->ajax()) {
+
+
+    $data     = empleados::withTrashed()->join('departamentos','empleados.id_departamento','=','departamentos.id_departamento')
+                                             ->select('empleados.id_empleado','empleados.nombre_empleado','empleados.deleted_at','departamentos.nombre_departamento')
+                                       ->get();
+   return DataTables::of($data)
+           ->addIndexColumn()
+           ->addColumn('btn',function($data){
+
+               $btn = '&nbsp;';
+
+               if ($data->deleted_at) {
+                   $btn .= '<button type="button" name="activauser"  id="'.$data->id_empleado.'" class="activauser btn btn-success  btn-sm" data-toggle="modal" data-target="#mactivarp">Activar</button>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="eliminaruser"  id="'.$data->id_empleado.'" class="eliminaruser btn btn-danger  btn-sm" data-toggle="modal" data-target="#mborrarp">Eliminar</button>';
+               }else{
+                   if ($data->estatus == 'Sin Definir')  {
+                   $btn .= '<a href="javascript:void(0)" onclick="edituser('.$data->id_empleado.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#staticBackdrop">Definir Pedido</button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_empleado.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+                   else{
+                   $btn .= '<a href="javascript:void(0)" onclick="showpedido('.$data->id_empleado.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#detallepedido"><span class="ti-pencil-alt" title="Editar">Editar</span></button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_empleado.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+               }
+
+               return $btn;
+           })
+
+           ->rawColumns(['btn'])
+           ->make(true);
+} 
+
+
+             $departamentos  = departamentos::orderBy('nombre_departamento')->get();
+             return view ('empleado/index')
+             ->with('departamentos',$departamentos);
+             
+
+
     }
-    
+
+
+    public function pdfempleado(){
+
+        //$pdfempleado = empleados::all();
+        $pdfempleado = empleados::withTrashed()->join('departamentos','departamentos.id_departamento','=','empleados.id_departamento')
+      ->select('empleados.nombre_empleado','empleados.apellido_pempleado','empleados.email_empleado','empleados.celular_empleado','empleados.id_empleado','departamentos.nombre_departamento')
+      ->get();
+
+
+        $pdf = \PDF::loadView('empleado.pdf',compact('pdfempleado'));
+        return $pdf->download('pdf_empleado.pdf');
+    }
     public function registerempleado()
     {
         $consulta = empleados::orderBy('id_empleado','DESC')

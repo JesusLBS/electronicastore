@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 use App\Models\proveedores; 
 use App\Models\marcas; 
 use App\Models\productcategorias; 
@@ -23,10 +24,10 @@ class proveedorescontroller extends Controller
         $this->middleware('auth');
     }
     
-    public function index()
+    public function index(Request $request)
     {
         
-         
+        /*
         $consulta2      = proveedores::withTrashed()->select('proveedores.id_proveedor','proveedores.celular_proveedor'
                                                         ,'proveedores.email_proveedor','proveedores.nombre_proveedor','proveedores.deleted_at')
                                        ->get();
@@ -34,6 +35,47 @@ class proveedorescontroller extends Controller
         //return $id_sigue;
         return view ('proveedor/index')
              ->with('consulta2',$consulta2);
+             */
+        if ($request->ajax()) {
+ 
+
+        $data      = proveedores::withTrashed()->select('proveedores.id_proveedor','proveedores.celular_proveedor'
+                                                            ,'proveedores.email_proveedor','proveedores.nombre_proveedor')
+                                           ->get();
+
+        return DataTables::of($data)
+               ->addIndexColumn()
+               ->addColumn('btn',function($data){
+
+                   $btn = '&nbsp;';
+
+                   if ($data->deleted_at) {
+                       $btn .= '<button type="button" name="activauser"  id="'.$data->id_proveedor.'" class="activauser btn btn-success  btn-sm" data-toggle="modal" data-target="#mactivarp">Activar</button>';
+                       $btn .= '&nbsp;&nbsp';
+                       $btn .= '<button type="button" name="eliminaruser"  id="'.$data->id_proveedor.'" class="eliminaruser btn btn-danger  btn-sm" data-toggle="modal" data-target="#mborrarp">Eliminar</button>';
+                   }else{
+                       if ($data->estatus == 'Sin Definir')  {
+                       $btn .= '<a href="javascript:void(0)" onclick="edituser('.$data->id_proveedor.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#staticBackdrop">Definir Pedido</button></a>';
+                       $btn .= '&nbsp;&nbsp';
+                       $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_proveedor.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                       }
+                       else{
+                       $btn .= '<a href="javascript:void(0)" onclick="showpedido('.$data->id_proveedor.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#detallepedido"><span class="ti-pencil-alt" title="Editar">Editar</span></button></a>';
+                       $btn .= '&nbsp;&nbsp';
+                       $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_proveedor.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                       }
+                   }
+
+                   return $btn;
+               })
+               ->rawColumns(['btn'])
+               ->make(true);
+        }
+
+       
+
+        return view ('proveedor/index');
+
     }
     
     public function registerproveedor() 

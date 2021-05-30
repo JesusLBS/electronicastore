@@ -59,7 +59,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-
+/*
 public function login(Request $request)
 {
    
@@ -92,6 +92,37 @@ public function login(Request $request)
         return view("auth.2fa", compact('urlQR', 'user'));
     }
     
+    
+    $this->incrementLoginAttempts($request);
+    
+    return $this->sendFailedLoginResponse($request);
+}
+*/
+
+
+
+
+public function login(Request $request)
+{
+    //Login sin 2FA
+   
+    $this->validate($request,[
+            'email'     => 'required',
+            'password'  => 'required',
+           
+        ]);   
+
+    
+    if ($this->hasTooManyLoginAttempts($request)) {
+        $this->fireLockoutEvent($request);
+
+        return $this->sendLockoutResponse($request);
+    }
+
+    $user = User::where($this->username(), '=', $request->email)
+                  ->where('activo',1)
+                  ->first();
+                  
     Auth::login($user);
           if (auth()->user()->id_rol == 2) {
               //return "Usuario";
@@ -106,6 +137,20 @@ public function login(Request $request)
     
     return $this->sendFailedLoginResponse($request);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function createUserUrlQR($user)
@@ -146,16 +191,21 @@ public function login2FA(Request $request, User $user)
         $request->session()->regenerate();
 
         //dd($request);
-          Log::channel('loginsuccess')->info('El usuario' .$user->name. 'con la clave' . $user->id.'Se logueo e Ingreso exitosamente en el sistema');
-          Auth::login($user);
-          if (auth()->user()->id_rol == 2) {
-              //return "Usuario";
-            return redirect()->intended('/');
-          }
-          else{
-             //return "Eres Admin";
-             return redirect()->intended($this->redirectPath());
-          }
+           Log::channel('loginsuccess')->info('El Usuario:  ' .$user->name. '  con la clave  ' . $user->id.'  Se logueo e Ingreso exitosamente en el sistema');
+           Auth::login($user);
+           if (auth()->user()->id_rol == 2) {
+               //return "Usuario";
+            Log::channel('login')->info('El Usuario cliente:  ' .$user->name. '  con la clave  ' . $user->id.'  Ingreso al sistema');
+            Session::flash('mensajelogin',"Hola $user->name Acabas de ingresar exitosamente");
+             return redirect()->intended('/');
+           }
+           else{
+              //return "Eres Admin";
+             Log::channel('login')->info('El Usuario: ' .$user->name. '  con la clave  ' . $user->id.'  Ingreso al sistema con permisos en el sistema');
+             Session::flash('mensajelogin',"Hola $user->name Acabas de ingresar exitosamente");
+             return redirect()->intended('/home');
+           }
+
 
         
        

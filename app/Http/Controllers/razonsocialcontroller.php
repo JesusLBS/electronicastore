@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 use App\Models\razonsocials;
 use App\Models\proveedores;
 use Session;

@@ -18,8 +18,10 @@ class MDadmin
     {
         $usuario_actual=\Auth::user();
         if ($usuario_actual->id_rol==2) {
-           abort(401,'This Acton is unauthorized');
+            return redirect()->intended('/');
+            //abort(401,'This Acton is unauthorized');
         }
         return $next($request);
     }
 }
+   

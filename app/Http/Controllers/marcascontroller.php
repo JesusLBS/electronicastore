@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\marcas;
 use App\Models\productos;
+use DataTables;
 use Session;  
 
 class marcascontroller extends Controller

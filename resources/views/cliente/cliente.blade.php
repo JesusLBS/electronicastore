@@ -20,21 +20,38 @@
   </a>
 </div>
 
-<!-------------------------------------------------- Tabla de Consulta(Reporte) ---------------------------------------------------------------->
+
+<!-------------------------------------------------- Tabla de Consulta(Reporte DataTables) ---------------------------------------------------------------->
 
     <div class="container-fluid mt--6">
+
+
+      <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+
+        <div class="content-agregar">
+        <form name="form_reloj"> 
+          Hora:
+          <input type="text" name="hora_pedido0" id="hora_pedido0"  class="form-control" value="" readonly=""> 
+        </form>  
+            
+        </div> 
+
+ 
+    <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <center><h3 class="mb-0">Informacion Clientes</h3></center>
+              <center><h3 class="mb-0">Clientes</h3></center>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <table class="table align-items-center table-flush">
+              <table id="tableclientes" class="table table-hover">
                 <thead class="thead-light">
                   <tr>
+                    <th>N°</th>
                     <th>Clave</th>
                     <th>Foto del Usuario</th>
                     <th>Nombre Cliente</th>
@@ -44,91 +61,44 @@
                     <th>Opciones</th>
                   </tr>
                 </thead>
-                <tbody class="list">
-                  @foreach($consulta2 as $infclient)
-                  <tr>
-                    
-                    <td class="budget">
-                       {{$infclient->id_infcliente}}
-                    </td>
-                    <td>
-                     <div class="media align-items-center">
-
-                        <a href="#" class="avatar rounded-circle mr-3" data-toggle="tooltip" 
-                        title="{{$infclient->id}} {{$infclient->name}}">
-                          <img class="imgperfil"  width="60px" height="60px" src="{{asset('archivos/'.$infclient->img)}}">
-                        </a>
-
-                      </div>
-
-                    </td>
-                    <td>
-                      <span >
-                        <span>{{$infclient->nombre_cliente}} {{$infclient->apellido_pcliente}} {{$infclient->apellido_mcliente}}</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span>{{$infclient->email_cliente}}</span>
-                    </td>
-                    <td>
-                      <span>{{$infclient->nombre_estado}}</span>
-                    </td>
-                    <td>
-                      <span>{{$infclient->celular_cliente}}</span>
-                    </td>
-                    
-                    <td>
-                    @if(auth()->user()->id_rol == 1 )
-                      @if($infclient->deleted_at)
-                        <form id="activarinfcliente" action="{{route('activarinfcliente',['id_infcliente'=>$infclient->id_infcliente])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-outline-success">Activar</button>
-                        </form>
-                        <form id="borrarinfcliente" action="{{route('borrarinfcliente',['id_infcliente'=>$infclient->id_infcliente])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-outline-danger">
-                                                      <span class="" title="Eliminar">Eliminar</span>
-                                                    </button>
-                        </form>
-                        @else
-                         <form id="desactivarinfcliente" action="{{route('desactivarinfcliente',['id_infcliente'=>$infclient->id_infcliente])}}" method="POST" enctype="multipart/form-data"> 
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-warning">Desactivar</button>
-                        </form> 
-
-
-                        @endif 
-                         <a href="{{route('editar_infcliente',['id_infcliente'=>$infclient->id_infcliente])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button>
-                         </a>
-                     @else
-                      @if(auth()->user()->id_rol == 4)
-                     <a href="{{route('editar_infcliente',['id_infcliente'=>$infclient->id_infcliente])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button>
-                         </a>
-                        @else
-                        Sin Permisos
-                     @endif   
-                     @endif
-
-                        
-                    </td>
-
-                  </tr>
-   @endforeach
-                </tbody>
               </table>
             </div>
-            
           </div>
         </div>
       </div>
 
-<!-------------------------------------------------- End Tabla de Consulta(Reporte) ---------------------------------------------------------------->
+<!-------------------------------------------------- End Tabla de Consulta(Reporte DataTables) ---------------------------------------------------------------->
+
+
 
 
  
 <!------------------------------------------------------------------------------------------------------------------>
 
+@stop
+@section('contenido2')
+<script type="text/javascript">
+$(function(){
+  var table = $('#tableclientes').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: "{{ route('cliente') }}",
+    columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'id_infcliente', name: 'id_infcliente' },
+            { data: 'img', name: 'img' },
+            { data: 'nombre_cliente', name: 'nombre_cliente'},
+            { data: 'email_cliente', name: 'email_cliente' },
+            { data: 'nombre_estado', name: 'nombre_estado' },
+            { data: 'celular_cliente', name: 'celular_cliente' },
+            {
+                data: 'btn',
+                name: 'btn',
+                orderable: true,
+                searchable: true
+            },
+        ]
+      });
+});
+</script>
 @stop

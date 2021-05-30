@@ -14,6 +14,7 @@
 </div>
 
 
+
 <!-------------------------------------------------- Formulariio Boton Agregar Modal ---------------------------------------------------------------->
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -29,8 +30,8 @@
                 <div class="card-header" id="registrarse">Registro Estados</div>
               </center>
                 <div class="card-body">
-                    <form action = "{{route('guardarestado')}}" method = "POST">  
-                    {{csrf_field()}}                    
+                    <form action = "{{route('guardarestado')}}" method = "POST">
+                    {{csrf_field()}}
 <br>
 <br>
                         <div class="form-group row">
@@ -64,8 +65,6 @@
 <br>
 <br>
 <br>
-              
-                        
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-outline-primary">
@@ -171,4 +170,7 @@
 
 
 <!------------------------------------------------------------------------------------------------------------------>
+@stop
+
+@section('contenido2')
 @stop

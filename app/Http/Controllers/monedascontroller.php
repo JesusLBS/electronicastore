@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\monedas;
+use DataTables;
 use Session;
 
 class monedascontroller extends Controller

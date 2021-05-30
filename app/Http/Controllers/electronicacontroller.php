@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\estados;
+use App\Models\User;
 use Session;
 
 class electronicacontroller extends Controller
@@ -12,13 +13,17 @@ class electronicacontroller extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */ 
+     */
     /*
     public function __construct()
     {
         $this->middleware('auth');
     }
     */
+
+    public function getusers(){
+        return response()->json(User::all(),200);
+    }
 
 
 
@@ -33,7 +38,6 @@ class electronicacontroller extends Controller
 
 
 
- 
 
 
 

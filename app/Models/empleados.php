@@ -15,5 +15,5 @@ class empleados extends Model
 	protected $primaryKey = 'id_empleado';                 
     protected $fillable=["id_empleado", "nombre_empleado", "apellido_pempleado","apellido_mempleado","celular_empleado","email_empleado"
                           ,"calle_empleado","codigo_postalempleado","sexo_empleado","id_tipo_empleado","id_municipio"
-                          ,"id_estado","deleted_at"];
+                          ,"id_estado","contratopdf","deleted_at"];
 }

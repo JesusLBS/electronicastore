@@ -7,7 +7,7 @@ use App\Http\Controllers\cookiecontroller;
 use App\Http\Controllers\usercontroller;
 
 
-use App\Http\Controllers\viascontroller; 
+use App\Http\Controllers\viascontroller;
 use App\Http\Controllers\monedascontroller;
 use App\Http\Controllers\formapagoscontroller;
 use App\Http\Controllers\metodopagoscontroller;
@@ -90,7 +90,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 /*Pedidos*/
 /*Route::resources([
     'pedidos' => pedidoscontroller::class,
-    
 ]);
 */
 
@@ -104,6 +103,39 @@ Route::get('/pedidos/desactivarpedido/{pedido}', [App\Http\Controllers\pedidosco
 
 //Activacion
 Route::get('/pedidos/activarpedido/{id_pedido}', [App\Http\Controllers\pedidoscontroller::class, 'activarpedido'])->name('pedidos.activarpedido');
+//Borrar
+Route::get('/pedidos/eliminarpedido/{id_pedido}', [App\Http\Controllers\pedidoscontroller::class, 'eliminarpedido'])->name('pedidos.eliminarpedido');
+
+//Editar
+Route::get('/pedidos/edit/{id_pedido}', [App\Http\Controllers\pedidoscontroller::class, 'edit'])->name('pedidos.edit');
+//Show
+Route::get('/pedidos/show/{id_pedido}', [App\Http\Controllers\pedidoscontroller::class, 'show'])->name('pedidos.show');
+//Show2
+Route::get('/pedidos/show2/{id_pedido}', [App\Http\Controllers\pedidoscontroller::class, 'show2'])->name('pedidos.show2');
+//Update
+Route::post('/update',[pedidoscontroller::class,'update'])->name('pedidos.update');
+
+
+Route::get('/pedidos/seleccionado/{id_pedido}', [App\Http\Controllers\pedidoscontroller::class, 'seleccionado'])->name('pedidos.seleccionado');
+Route::post('storep',[pedidoscontroller::class,'storep'])->name('pedidos.storep');
+
+//Route::get('pedidos', [App\Http\Controllers\pedidoscontroller::class, 'index2'])->name('pedidos.index2');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -114,16 +146,19 @@ Route::get('electronica_users',[usercontroller::class,'index'])->name('user');
 Route::post('electronica_registeruser',[usercontroller::class,'store'])->name('registeruser');
 
 //Desactivar
-Route::post('desactivaruser/{id}',[usercontroller::class,'desactivaruser'])->name('desactivaruser');
+Route::get('desactivaruser/{id}',[usercontroller::class,'desactivaruser'])->name('desactivaruser');
 //Activacion
-Route::post('activaruser/{id}',[usercontroller::class,'activaruser'])->name('activaruser');
+Route::get('activaruser/{id}',[usercontroller::class,'activaruser'])->name('activaruser');
 //Borrar
-Route::post('borraruser/{id}',[usercontroller::class,'borraruser'])->name('borraruser');
+Route::get('borraruser/{id}',[usercontroller::class,'borraruser'])->name('borraruser');
 //Editar
 Route::get('editar_user/{id}',[usercontroller::class,'editar_user'])->name('editar_user');
-
 Route::post('/updateuser',[usercontroller::class,'updateuser'])->name('updateuser');
-
+//Editar2
+Route::get('editar_user2/{id}',[usercontroller::class,'editar_user2'])->name('editar_user2');
+Route::post('/userupdate',[usercontroller::class,'userupdate'])->name('userupdate');
+//PDF
+Route::get('pdfuser',[usercontroller::class,'pdfuser'])->name('pdfuser');
 
 /*Vias*/
 Route::get('electronica_via',[viascontroller::class,'index'])->name('via');
@@ -242,14 +277,14 @@ Route::post('desactivarinfcliente/{id_infcliente}',[informacionclientescontrolle
 Route::post('activarinfcliente/{id_infcliente}',[informacionclientescontroller::class,'activarinfcliente'])->name('activarinfcliente');
 //Borrar
 Route::post('borrarinfcliente/{id_infcliente}',[informacionclientescontroller::class,'borrarinfcliente'])->name('borrarinfcliente');
-//Editar 
+//Editar
 Route::get('editar_infcliente/{id_infcliente}',[informacionclientescontroller::class,'editar_infcliente'])->name('editar_infcliente');
 
 Route::post('/updateinfcliente',[informacionclientescontroller::class,'updateinfcliente'])->name('updateinfcliente');
- 
 
 
- /*Marca*/
+
+/*Marca*/
 Route::get('electronica_marca',[marcascontroller::class,'index'])->name('marca');
 Route::post('electronica_guardarmarca',[marcascontroller::class,'guardarmarca'])->name('guardarmarca');
 //Editar
@@ -268,7 +303,7 @@ Route::post('borrarmarca/{id_marca}',[marcascontroller::class,'borrarmarca'])->n
 
 
 
- /*Producto-Categoria*/
+/*Producto-Categoria*/
 Route::get('electronica_pcategoria',[productoscategoriascontroller::class,'index'])->name('pcategoria');
 Route::post('electronica_guardarpcategoria',[productoscategoriascontroller::class,'guardarpcategoria'])->name('guardarpcategoria');
 //Editar
@@ -310,7 +345,7 @@ Route::get('editar_templeado/{id_tipo_empleado}',[tipoempleadocontroller::class,
 
 Route::post('/updatetempleado',[tipoempleadocontroller::class,'updatetempleado'])->name('updatetempleado');
 
- 
+
 //Desactivar
 Route::post('desactivartempleado/{id_tipo_empleado}',[tipoempleadocontroller::class,'desactivartempleado'])->name('desactivartempleado');
 //Activacion
@@ -341,7 +376,8 @@ Route::post('desactivarempleado/{id_empleado}',[empleadoscontroller::class,'desa
 Route::post('activarempleado/{id_empleado}',[empleadoscontroller::class,'activarempleado'])->name('activarempleado');
 //Borrar
 Route::post('borrarempleado/{id_empleado}',[empleadoscontroller::class,'borrarempleado'])->name('borrarempleado');
-
+//PDF
+Route::get('pdfempleado',[empleadoscontroller::class,'pdfempleado'])->name('pdfempleado');
 
 
 

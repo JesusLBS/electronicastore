@@ -57,7 +57,11 @@ tr:nth-child(even){
 
 
 
-
+.model-ajax{
+    background: black;
+    color: white;
+    font-weight: bold;
+}
 
 
 

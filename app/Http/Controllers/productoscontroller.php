@@ -7,7 +7,7 @@ use App\Models\productos;
 use App\Models\marcas;
 use App\Models\productcategorias;
 use App\Models\proveedores;
-
+use DataTables;
 use Session; 
 
 
@@ -24,9 +24,9 @@ class productoscontroller extends Controller
         $this->middleware('auth');
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        
+        /*
         $productcategorias  = productcategorias::orderBy('nombre_pcategoria')->get();
         $consulta2      = productos::withTrashed()->join('marcas','productos.id_marca','=','marcas.id_marca')
                                             
@@ -39,8 +39,53 @@ class productoscontroller extends Controller
         return view ('producto/index')
              ->with('productcategorias',$productcategorias)
              ->with('consulta2',$consulta2);
+             */
+        //-------------------------------------------------------------------------------
+
+        if ($request->ajax()) {
+ 
+
+       $data      = productos::withTrashed()->join('marcas','productos.id_marca','=','marcas.id_marca')
+                                            
+                                              ->join('proveedores','productos.id_proveedor','=','proveedores.id_proveedor')
+                                                       
+                                              ->join('productcategorias','productos.id_pcategoria','=','productcategorias.id_pcategoria')
+                                                  ->select('productos.id_producto','productos.nombre_producto','productos.preciocompra_producto','productos.precioventa_producto','productcategorias.nombre_pcategoria','proveedores.nombre_proveedor','marcas.nombre_marca','productos.imgpr','productos.deleted_at')
+                                       ->get();
+
+       return DataTables::of($data)
+               ->addIndexColumn()
+               ->addColumn('btn',function($data){
+                $btn = '&nbsp;';
+
+                if ($data->deleted_at) {
+                   $btn .= '<button type="button" name="activauser"  id="'.$data->id_producto.'" class="activauser btn btn-success  btn-sm" data-toggle="modal" data-target="#mactivarp">Activar</button>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="eliminaruser"  id="'.$data->id_producto.'" class="eliminaruser btn btn-danger  btn-sm" data-toggle="modal" data-target="#mborrarp">Eliminar</button>';
+                }else{
+                   if ($data->estatus == 'Sin Definir')  {
+                   $btn .= '<a href="javascript:void(0)" onclick="edituser('.$data->id_producto.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#staticBackdrop">Definir Pedido</button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_producto.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+                   else{
+                   $btn .= '<a href="javascript:void(0)" onclick="showpedido('.$data->id_producto.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#detallepedido"><span class="ti-pencil-alt" title="Editar">Editar</span></button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_producto.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+                }
+
+               return $btn;
+           })
+           ->rawColumns(['btn'])
+           ->make(true);
+       }
+       $productcategorias  = productcategorias::orderBy('nombre_pcategoria')->get();
+       return view ('producto/index')
+             ->with('productcategorias',$productcategorias);
     }
     
+
     public function registerproducto()
     {
         $consulta = productos::orderBy('id_producto','DESC')

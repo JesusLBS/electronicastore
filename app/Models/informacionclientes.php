@@ -15,5 +15,5 @@ class informacionclientes extends Model
 	protected $primaryKey = 'id_infcliente';                 
     protected $fillable=["id_infcliente", "nombre_cliente", "apellido_pcliente","apellido_mcliente","direccion_cliente"
                         ,"departamento_cliente","colonia_cliente","ciudad_cliente","codigo_postalcliente"
-                        ,"sexo_cliente","email_cliente","celular_cliente","referencia_cliente","id_estado","id_via","id","deleted_at"];
+                        ,"sexo_cliente","email_cliente","celular_cliente","referencia_cliente","id_estado","id_municipio","id_via","id","deleted_at"];
 }

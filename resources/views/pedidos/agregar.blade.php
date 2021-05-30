@@ -59,9 +59,6 @@
                     <option value="{{$users->id}}"> {{$users->id}} {{$users->name}}</option>
                     @endforeach
                     </select>
-                    @if($errors->first('id'))
-                    <p class="text-danger">{{$errors->first('id')}}</p>
-                    @endif
                 </div>
             </div>
              
@@ -69,27 +66,18 @@
                 <div class="form-group">
                     <label for="fecha_pedido">Fecha del Pedido:</label>
                     <input type="date" name="fecha_pedido" id="fecha_pedido" value="" class="form-control">
-                    @if($errors->first('fecha_pedido'))
-                    <p class="text-danger">{{$errors->first('fecha_pedido')}}</p>
-                    @endif
                 </div>
             </div>
              <div class="col-xs-5 col-sm-4 col-md-3">
                 <div class="form-group">
                     <label for="fechaentrega_pedido">Fecha de Entrega:</label>
                     <input type="date" name="fechaentrega_pedido" id="fechaentrega_pedido" value="" class="form-control">
-                    @if($errors->first('fechaentrega_pedido'))
-                    <p class="text-danger">{{$errors->first('fechaentrega_pedido')}}</p>
-                    @endif
                 </div>
             </div>
             <div class="col-xs-5 col-sm-4 col-md-3">
                 <div class="form-group">
                     <label for="hora_pedido">Hora del Pedido:</label>
-                    <input type="time" name="hora_pedido" id="hora_pedido" value="" class="form-control">
-                    @if($errors->first('hora_pedido'))
-                    <p class="text-danger">{{$errors->first('hora_pedido')}}</p>
-                    @endif
+                    <input type="text" name="hora_pedido" id="hora_pedido" value="" class="form-control" readonly="">
                 </div>
             </div>
                        
@@ -103,10 +91,9 @@
 
       <div class="form-group row mb-0 ">
         <div class="col-md-6 offset-md-4 ">
-           
             <center>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-              <button type="submit"  id="addbutton" class="btn btn-outline-primary font-weight-bold" >Agregar Pedido</button>
+              <button type="submit"  id="addbutton" name="addbutton" class="btn btn-outline-primary font-weight-bold" >Agregar Pedido</button>
             </center>
         </div>
     </div> 

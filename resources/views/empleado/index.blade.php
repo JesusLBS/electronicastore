@@ -28,86 +28,82 @@
 
 <!--------------------------------------------------*---------------------------------------------------------------->
 
-<!-------------------------------------------------- Tabla de Consulta(Reporte) ---------------------------------------------------------------->
 
-  <div class="container-fluid mt--6">
+
+<!-------------------------------------------------- Tabla de Consulta(Reporte DataTables) ---------------------------------------------------------------->
+
+    <div class="container-fluid mt--6">
+
+
+      <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+
+        <div class="content-agregar">
+        <form name="form_reloj"> 
+          Hora:
+          <input type="text" name="hora_pedido0" id="hora_pedido0"  class="form-control" value="" readonly=""> 
+        </form>  
+            
+        </div> 
+
+ 
+    <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+    <a href="{{url('pdfempleado')}}">
+  <button class="btn btn-outline-danger">PDF</button>
+ </a>
+ <hr>
+ <!--------------------------------------------------*---------------------------------------------------------------->
       <div class="row">
         <div class="col">
           <div class="card">
-            <!-- Card header --> 
+            <!-- Card header -->
             <div class="card-header border-0">
               <center><h3 class="mb-0">Empleados</h3></center>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <table class="table align-items-center table-flush">
+              <table id="tableempleados" class="table table-hover">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="Clave">Clave</th>
-                    <th scope="col" class="sort" data-sort="Empleado">Empleado</th>
-                    <th scope="col" class="sort" data-sort="Departamento ">Departamento </th>
-                    <th scope="col" class="sort" data-sort="Opciones"><center>Opciones</center></th>
-                
-
+                    <th>N°</th>
+                    <th>Clave</th>
+                    <th>Empleado</th>
+                    <th>Departamento</th>
+                    <th>Opciones</th>
                   </tr>
                 </thead>
-                <tbody class="list">
-                  @foreach($consulta2 as $empleado)
-                  <tr>
-                    <td>
-                      <span class="block">{{$empleado->id_empleado}}</span>
-                    </td>
-                    <td>
-                      <span class="block">{{$empleado->nombre_empleado}}</span>
-                    </td>
-                    <td> 
-                      <span class="block">{{$empleado->nombre_departamento}}</span>
-                    </td>
-                    <td class="text-center">
-                    @if(auth()->user()->id_rol == 1 )
-                      @if($empleado->deleted_at)
-                        <form id="activarempleado" action="{{route('activarempleado',['id_empleado'=>$empleado->id_empleado])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-success">Activar</button>
-                        </form>
-                        <form id="borrarempleado" action="{{route('borrarempleado',['id_empleado'=>$empleado->id_empleado])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-outline-danger"><i class="fas fa-trash delete pd-seting-ed " title="Eliminar"></i></button>
-                        </form>
-                        @else
-                        <form id="desactivarempleado" action="{{route('desactivarempleado',['id_empleado'=>$empleado->id_empleado])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-warning">Desactivar</button>
-                        </form> 
-                        @endif  
-                       
-                        <a href="{{route('editar_empleado',['id_empleado'=>$empleado->id_empleado])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button>
-                        </a>
-                      @else
-                      @if(auth()->user()->id_rol == 4)
-                      <a href="{{route('editar_empleado',['id_empleado'=>$empleado->id_empleado])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button>
-                        </a>
-                         @else
-                        Sin Permisos
-                     @endif   
-                     @endif
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody> 
               </table>
             </div>
-            
           </div>
         </div>
       </div>
 
-
-<!-------------------------------------------------- End Tabla de Consulta(Reporte) ---------------------------------------------------------------->
-
+<!-------------------------------------------------- End Tabla de Consulta(Reporte DataTables) ---------------------------------------------------------------->
 
 <!------------------------------------------------------------------------------------------------------------------>
+@stop
+
+
+@section('contenido2')
+
+<script type="text/javascript">
+$(function(){
+  var table = $('#tableempleados').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: "{{ route('electronica_empleado') }}",
+    columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'id_empleado', name: 'id_empleado' },
+            { data: 'nombre_empleado', name: 'nombre_empleado'},
+            { data: 'nombre_departamento', name: 'nombre_departamento' },
+            {
+                data: 'btn',
+                name: 'btn',
+                orderable: true,
+                searchable: true
+            },
+        ]
+      });
+});
+</script>
 @stop

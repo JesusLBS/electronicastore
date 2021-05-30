@@ -78,7 +78,7 @@
                                 <button type="submit" class="btn btn-outline-primary">
                                      Registrar
                                 </button>
-                                <input type="button" class="btn btn-outline-danger"  value="Regresar" name="Back2" onclick="history.back()"/>
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </form>
@@ -94,86 +94,73 @@
     </div>
   </div>
  
-<!-------------------------------------------------- Tabla de Consulta(Reporte) ---------------------------------------------------------------->
+<!-------------------------------------------------- Tabla de Consulta(Reporte DataTables) ---------------------------------------------------------------->
 
- <div class="container-fluid mt--6">
+    <div class="container-fluid mt--6">
+
+
+      <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+
+        <div class="content-agregar">
+        <form name="form_reloj"> 
+          Hora:
+          <input type="text" name="hora_pedido0" id="hora_pedido0"  class="form-control" value="" readonly=""> 
+        </form>  
+            
+        </div> 
+
+ 
+    <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <center><h3 class="mb-0">Departamentos</h3></center>
+              <center><h3 class="mb-0">Clientes</h3></center>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <table class="table align-items-center table-flush">
+              <table id="tabledepartamento" class="table table-hover">
                 <thead class="thead-light">
                   <tr>
+                    <th>N°</th>
                     <th>Clave</th>
                     <th>Departamento</th>
                     <th>Opciones</th>
                   </tr>
                 </thead>
-                <tbody class="list">
-                  @foreach($consulta2 as $departamento)
-                  <tr>
-                    
-                    <td class="budget">
-                       {{$departamento->id_departamento}}
-                    </td>
-                    <td>
-                       {{$departamento->nombre_departamento}}
-                    </td>
-                    
-                    <td>
-                    @if(auth()->user()->id_rol == 1 )
-                      @if($departamento->deleted_at)
-                        <form id="activardepartamento" action="{{route('activardepartamento',['id_departamento'=>$departamento->id_departamento])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-success">Activar</button>
-                        </form>
-                        <form id="borrardepartamento" action="{{route('borrardepartamento',['id_departamento'=>$departamento->id_departamento])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-outline-danger"><i class="fas fa-trash delete pd-seting-ed " title="Eliminar"></i></button>
-                        </form>
-                        @else
-                         <form id="desactivardepartamento" action="{{route('desactivardepartamento',['id_departamento'=>$departamento->id_departamento])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-warning">Desactivar</button>
-                        </form>  
-
-
-                        @endif 
-                         <a href="{{route('editar_departamento',['id_departamento'=>$departamento->id_departamento])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button>
-                     @else
-                      @if(auth()->user()->id_rol == 4)
-                     <a href="{{route('editar_departamento',['id_departamento'=>$departamento->id_departamento])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button>
-                        @else
-                        Sin Permisos
-                     @endif   
-                     @endif
-
-                        
-                    </td>
-
-                  </tr>
-   @endforeach
-                </tbody>
               </table>
             </div>
-            
           </div>
         </div>
       </div>
 
-
-<!-------------------------------------------------- End Tabla de Consulta(Reporte) ---------------------------------------------------------------->
-
-
+<!-------------------------------------------------- End Tabla de Consulta(Reporte DataTables) ---------------------------------------------------------------->
 
    
 <!------------------------------------------------------------------------------------------------------------------>
+@stop
+
+@section('contenido2')
+<script type="text/javascript">
+$(function(){
+  var table = $('#tabledepartamento').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: "{{ route('departamento') }}",
+    columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'id_departamento', name: 'id_departamento' },
+            { data: 'nombre_departamento', name: 'nombre_departamento'},
+            {
+                data: 'btn',
+                name: 'btn',
+                orderable: true,
+                searchable: true
+            },
+        ]
+      });
+});
+</script>
 @stop

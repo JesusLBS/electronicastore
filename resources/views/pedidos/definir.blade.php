@@ -1,3 +1,21 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -10,41 +28,50 @@
       </div>
       <div class="modal-body">
 <!------------------------------------------------------------------------------------------------------------------>
-    <div class="row">
+<form  id="updatepedido" name="updatepedido" method="POST" enctype="multipart/form-data">  
+                    {{csrf_field()}}
+       <div class="row">
         <div class="col">
-        <div class="row">
+        <div class="row"> 
       <div class="col-sm-12">
         <h5 class="modal-title" id=""><b>Detalles</b></h5>
-        <label for="clave">Clave de pedido</label>
-        <input type="text" name="clave" id="clave" value="001" readonly="readonly" class="form-control">
+        <label for="id_pedido2">Clave de pedido</label>
+        <input type="text" name="id_pedido2" id="id_pedido2" value="" class="form-control" readonly="readonly">
         
-        <div class="row">
+        <div class="row"> 
           <div class="col-8 col-sm-3">
-            <label for="nameu">Cliente:</label>
-            <input type="text" nameu="nameu" id="nameu" value="Adriana" readonly="readonly" class="form-control">
+            <label for="id2">Cliente:</label>
+            <input type="text" name="id2" id="id2" value="" readonly="readonly" class="form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="fechapedidou">Fecha:</label>
-            <input type="text" name="fechapedidou" id="fechapedidou" value="01/01/2021" readonly="readonly" class="form-control">
+            <label for="fecha_pedido2">Fecha de realizacion:</label>
+            <input type="text" name="fecha_pedido2" id="fecha_pedido2" value="" readonly="readonly" class="form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="fechaentregau">Hora:</label>
-            <input type="text" name="fechaentregau" id="fechaentregau" value="13:12:22 pm" readonly="readonly" class="form-control">
+            <label for="hora_pedido2">Hora:</label>
+            <input type="text" name="hora_pedido2" id="hora_pedido2" value="" readonly="readonly" class="hora_pedido form-control">
           </div>
           <div class="col-8 col-sm-3">
-            <label for="Total">Total:</label>
-            <input type="text" name="Total" id="Total" value="$1800" readonly="readonly" class="form-control">
+            <label for="total1">Total:</label>
+            <input type="text" name="total1" id="total1" value="" readonly="readonly" class="form-control">
           </div> 
           <div class="col-8 col-sm-3">
-            <label for="cpiezas">Total Piezas:</label>
-            <input type="text" name="cpiezas" id="cpiezas" value="5 Piezas" readonly="readonly" class="form-control">
+            <label for="total_piezas">Total Piezas:</label>
+            <input type="text" name="total_piezas" id="total_piezas" value="" readonly="readonly" class="form-control">
           </div>          
         </div>
       </div>
     </div>
+    </div> 
     </div>
-    </div>
+</form>
 
+<!------------------------------------------------------------------------------------------------------------------>
+<form  id="definiendopedido" name="definiendopedido" method="POST" enctype="multipart/form-data">  
+                    {{csrf_field()}}
+
+
+  
     <div class="row">
         <div class="col">
         <div class="row">
@@ -54,90 +81,89 @@
             <div class="col-xs-5 col-sm-4 col-md-4">
                 <div class="form-group">
                     <label for="nombre_cliente">Seleccione Producto:</label>
-                    <select id="id_producto" name ="id_producto" class="custom-select">
+                    <select id="id_producto" name ="id_producto" class="selectprod custom-select">
                     <option selected=""></option>
                      @foreach($productos as $producto)
                     <option value="{{$producto->id_producto}}"> {{$producto->id}} {{$producto->nombre_producto}}</option>
                     @endforeach
                     </select>
-                    @if($errors->first('id_producto'))
-                    <p class="text-danger">{{$errors->first('id_producto')}}</p>
-                    @endif
+                    
                 </div>
             </div>
             <div class="col-xs-5 col-sm-4 col-md-3">
                 <div class="form-group">
-                    <label for="precio">Precio:</label>
-                    <input type="text" name="precio" id="precio" value="" class="form-control">
+                    <label for="preciocompra_producto">Precio:</label>
+                    <input type="text" name="preciocompra_producto" id="preciocompra_producto" value="" class="form-control" readonly="">
+                    <span class="text-danger" id="precio_productoError"></span>
                 </div>
             </div>
-            <div class="col-xs-5 col-sm-4 col-md-3">
+            <div class="col-xs-5 col-sm-3 col-md-2">
                 <div class="form-group">
                     <label for="cantidad">Cantidad:</label>
-                    <input type="text" name="cantidad" id="cantidad" value="" class="form-control">
+                    <input type="number" name="cantidad" id="cantidad" value="" class="form-control">
+                    <span class="text-danger" id="cantidadError"></span>
                 </div>
             </div>
-             <div class="col-xs-5 col-sm-4 col-md-2">
+             <div class="col-xs-5 col-sm-3 col-md-3">
               <div class="form-group">
-                    <label for="agregardefinir">Agregar</label>
-                <input type="submit" class="btn btn-outline-primary font-weight-bold"  value="Agregar"/>
+                    <label for="subtotal">Subtotal:</label>
+                    <input type="number" name="subtotal" id="subtotal" value="" class="form-control" readonly="">
                 </div>
             </div>
 
             
+          </div>
+          <div class="row">
+
+          <div class="col-12 col-sm-12" style="margin-left: 75%;">
+                <div class="form-group" >
+                    
+                    <button type="submit"  id="btnagregarproduct" style="width: 22%" name="btnagregarproduct" class="btn btn-primary font-weight-bold" >Agregar</button>
+                </div>
+            </div> 
           </div> 
       </div>
     </div>
     </div>
     </div>
 
-
-
-<div class="table-responsive">
-              <table class="table align-items-center table-flush">
+</form>
+<div class="row">
+        <div class="col">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0">
+              <center><h4 class="mb-0">Productos agregados</h4></center>
+            </div>
+            <!-- Light table -->
+            <div class="table-responsive">
+              <table class="table table-hover">
                 <thead class="thead-light">
                   <tr>
                     <th>Clave Producto</th>
                     <th>Producto</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
-                    <th>Subtotal</th>
-                    <th>Opciones</th>
+                    <th>Subtotal</th>                
+                    <th style="text-align: center;">Opciones</th>
                   </tr>
                 </thead>
-                <tbody class="list">
-                  
-                  <tr>
-                    
-                    <td class="budget">
-                      01
-                    </td>
-                    <td>
-                      TV 
-                    </td>
-                    <td>
-                      10000
-                    </td>
-                    <td>
-                      2 Piezas
-                    </td>
-                    <td>
-                      20000
-                    </td>
-                    <td>
-                      <button type="button submit" class="btn btn-outline-danger">Eliminar</button>  
-                    </td>
-                  </tr>
- 
-                </tbody>
+<!-------------------------------------------------- ---------------------------------------------------------------->
+    <tbody id="tabledefiniendo">
+   
+    </tbody>
+
+<!-------------------------------------------------- ---------------------------------------------------------------->
               </table>
             </div>
-
+          </div>
+        </div>
+      </div>
 
 
     <div class="form-group row mb-0 ">
         <div class="col-md-4">
-            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Eliminar Todo</button>
+            <button type="button" class="btn btn-outline-danger" >Eliminar Todo</button>
         </div>
     </div> 
 
@@ -145,9 +171,10 @@
         <div class="col-md-6 offset-md-4 ">
            
             <center>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-           
-            <input type="submit" class="btn btn-outline-primary font-weight-bold"  value="Finalizar Pedido"/>
+              <button type="button" id="cerrar" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <button type="button" id="calcular" class="btn btn-warning font-weight-bold">Calcular</button>
+
+              <button type="submit" id="finalizarpedido" name="finalizarpedido" class="btn btn-outline-primary font-weight-bold" disabled="">Finalizar Pedido</button>
             </center>
         </div>
     </div> 

@@ -89,85 +89,71 @@
 
     </div>
   </div>
+<!-------------------------------------------------- Tabla de Consulta(Reporte DataTables) ---------------------------------------------------------------->
 
-<!-------------------------------------------------- Tabla de Consulta(Reporte) ---------------------------------------------------------------->
+    <div class="container-fluid mt--6">
 
-  <div class="container-fluid mt--6">
+
+      <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+
+        <div class="content-agregar">
+        <form name="form_reloj"> 
+          Hora:
+          <input type="text" name="hora_pedido0" id="hora_pedido0"  class="form-control" value="" readonly=""> 
+        </form>  
+            
+        </div> 
+
+ 
+    <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
+
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <center><h3 class="mb-0">Tipo de templeado</h3></center>
+              <center><h3 class="mb-0">Tipo de empleado</h3></center>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <table class="table align-items-center table-flush">
+              <table id="tabletipoempleados" class="table table-hover">
                 <thead class="thead-light">
                   <tr>
+                    <th>N°</th>
                     <th>Clave</th>
                     <th>Tipo Empleado</th>
                     <th>Opciones</th>
                   </tr>
                 </thead>
-                <tbody class="list">
-                  @foreach($consulta2 as $templeado)
-                  <tr>
-                    
-                    <td class="budget">
-                       {{$templeado->id_tipo_empleado}}
-                    </td>
-                    <td>
-                     {{$templeado->nombre_tipoempleado}}
-                    </td>
-                    
-                    <td>
-                    @if(auth()->user()->id_rol == 1 )
-                      @if($templeado->deleted_at)
-                        <form id="activartempleado" action="{{route('activartempleado',['id_tipo_empleado'=>$templeado->id_tipo_empleado])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-success">Activar</button>
-                        </form>
-                        <form id="borrartempleado" action="{{route('borrartempleado',['id_tipo_empleado'=>$templeado->id_tipo_empleado])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-outline-danger"><i class="fas fa-trash delete pd-seting-ed " title="Eliminar"></i></button>
-                        </form>
-                        @else
-                        <form id="desactivartempleado" action="{{route('desactivartempleado',['id_tipo_empleado'=>$templeado->id_tipo_empleado])}}" method="POST" enctype="multipart/form-data">
-                                                    {{csrf_field()}}
-                                                    
-                                                    <button type="button submit" class="btn btn-warning">Desactivar</button>
-                        </form> 
-
-
-                        @endif 
-                        <a href="{{route('editar_templeado',['id_tipo_empleado'=>$templeado->id_tipo_empleado])}}"><button type="button submit" class="btn btn-outline-primary"><span class="ti-pencil-alt" title="Editar">Editar</span></button>
-                         </a>
-                     @else
-                      @if(auth()->user()->id_rol == 4)
-                     <a href="{{route('editar_templeado',['id_tipo_empleado'=>$templeado->id_tipo_empleado])}}"><button type="button submit" class="btn btn-outline-primary"><i class="far fa-edit edit" title="Editar"></i></button></a>
-                         </a>
-                        @else
-                        Sin Permisos
-                     @endif   
-                     @endif
-
-                        
-                    </td>
-
-                  </tr>
-   @endforeach
-                </tbody>
               </table>
             </div>
-            
           </div>
         </div>
       </div>
 
-<!-------------------------------------------------- End Tabla de Consulta(Reporte) ---------------------------------------------------------------->
+<!-------------------------------------------------- End Tabla de Consulta(Reporte DataTables) ---------------------------------------------------------------->
 
 <!------------------------------------------------------------------------------------------------------------------>
+@stop
+@section('contenido2')
+<script type="text/javascript">
+$(function(){
+  var table = $('#tabletipoempleados').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: "{{ route('templeado') }}",
+    columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'id_tipo_empleado', name: 'id_tipo_empleado' },
+            { data: 'nombre_tipoempleado', name: 'nombre_tipoempleado'},
+            {
+                data: 'btn',
+                name: 'btn',
+                orderable: true,
+                searchable: true
+            },
+        ]
+      });
+});
+</script>
 @stop

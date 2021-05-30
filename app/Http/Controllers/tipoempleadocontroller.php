@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 use App\Models\tipoempleados; 
 use App\Models\empleados;
 
@@ -20,9 +21,10 @@ class tipoempleadocontroller extends Controller
         $this->middleware('auth');
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        $consulta = tipoempleados::orderBy('id_tipo_empleado','DESC')
+
+/*        $consulta = tipoempleados::orderBy('id_tipo_empleado','DESC')
                    ->take(1)->get();
         $cuantos =count($consulta);
 
@@ -34,13 +36,64 @@ class tipoempleadocontroller extends Controller
         }
         else{ 
             $id_sigue = $consulta[0]->id_tipo_empleado + 1;
+        }*/ 
+
+                //Start Datatables with ajax
+
+    if ($request->ajax()) {
+ 
+
+    $data = tipoempleados::withTrashed()->select(['id_tipo_empleado','nombre_tipoempleado','deleted_at'])
+                                       ->get();
+   return DataTables::of($data)
+           ->addIndexColumn()
+           ->addColumn('btn',function($data){
+
+               $btn = '&nbsp;';
+
+               if ($data->deleted_at) {
+                   $btn .= '<button type="button" name="activauser"  id="'.$data->id_tipo_empleado.'" class="activauser btn btn-success  btn-sm" data-toggle="modal" data-target="#mactivarp">Activar</button>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="eliminaruser"  id="'.$data->id_tipo_empleado.'" class="eliminaruser btn btn-danger  btn-sm" data-toggle="modal" data-target="#mborrarp">Eliminar</button>';
+               }else{
+                   if ($data->estatus == 'Sin Definir')  {
+                   $btn .= '<a href="javascript:void(0)" onclick="edituser('.$data->id_tipo_empleado.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#staticBackdrop">Definir Pedido</button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_tipo_empleado.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+                   else{
+                   $btn .= '<a href="javascript:void(0)" onclick="showpedido('.$data->id_tipo_empleado.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#detallepedido"><span class="ti-pencil-alt" title="Editar">Editar</span></button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_tipo_empleado.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+               }
+
+               return $btn;
+           })
+
+           ->rawColumns(['btn'])
+           ->make(true);
+} 
+
+
+
+
+
+        $consulta = tipoempleados::orderBy('id_tipo_empleado','DESC')
+                   ->take(1)->get();
+        $cuantos =count($consulta);
+
+
+        if ($cuantos == 0) {
+            $id_sigue = 1;
+        }
+        else{ 
+            $id_sigue = $consulta[0]->id_tipo_empleado + 1;
         } 
 
-        //return $id_sigue;
 
         return view ('tipoempleado/index')
-            ->with('id_sigue',$id_sigue)
-            ->with('consulta2',$consulta2);
+            ->with('id_sigue',$id_sigue);
     }
 
     public function desactivartempleado($id_tipo_empleado)

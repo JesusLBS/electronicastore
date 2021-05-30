@@ -9,6 +9,7 @@ use App\Models\formapagos;
 use App\Models\vias;  
 use App\Models\User;
 use App\Models\municipios;
+use DataTables;
 use Session; 
    
 class informacionclientescontroller extends Controller
@@ -53,8 +54,9 @@ class informacionclientescontroller extends Controller
         return redirect()->to('electronica_cliente');
     }
     /*-----------------------------------------------------------Start Cliente----------------------------------------------*/
-    public function index()
+    public function index(Request $request)
     {
+        /*
         $consulta = informacionclientes::orderBy('id_infcliente','DESC')
                    ->take(1)->get();
         $cuantos =count($consulta);
@@ -79,7 +81,77 @@ class informacionclientescontroller extends Controller
             ->with('estados',$estados)
             ->with('vias',$vias)
             ->with('users',$users)
-            ->with('consulta2',$consulta2);         
+            ->with('consulta2',$consulta2);   */
+
+
+
+//Start DataTables with ajax
+
+    if ($request->ajax()) {
+ 
+
+    $data = informacionclientes::withTrashed()->join('estados','informacionclientes.id_estado','=','estados.id_estado')
+                                                       ->join('users','informacionclientes.id','=','users.id')
+                ->select('informacionclientes.id_infcliente','informacionclientes.nombre_cliente','informacionclientes.apellido_pcliente','informacionclientes.apellido_mcliente',
+                        'informacionclientes.email_cliente','users.id','users.name','users.img','estados.nombre_estado','informacionclientes.celular_cliente','informacionclientes.deleted_at')
+                ->get();
+
+   return DataTables::of($data)
+           ->addIndexColumn()
+           ->addColumn('btn',function($data){
+
+               $btn = '&nbsp;';
+
+               if ($data->deleted_at) {
+                   $btn .= '<button type="button" name="activauser"  id="'.$data->id_infcliente.'" class="activauser btn btn-success  btn-sm" data-toggle="modal" data-target="#mactivarp">Activar</button>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="eliminaruser"  id="'.$data->id_infcliente.'" class="eliminaruser btn btn-danger  btn-sm" data-toggle="modal" data-target="#mborrarp">Eliminar</button>';
+               }else{
+                   if ($data->estatus == 'Sin Definir')  {
+                   $btn .= '<a href="javascript:void(0)" onclick="edituser('.$data->id_infcliente.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#staticBackdrop">Definir Pedido</button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_infcliente.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+                   else{
+                   $btn .= '<a href="javascript:void(0)" onclick="showpedido('.$data->id_infcliente.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#detallepedido"><span class="ti-pencil-alt" title="Editar">Editar</span></button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_infcliente.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+               }
+
+               return $btn;
+           })
+           ->rawColumns(['btn'])
+           ->make(true);
+}
+
+
+
+    
+        $consulta = informacionclientes::orderBy('id_infcliente','DESC')
+                   ->take(1)->get();
+        $cuantos =count($consulta);
+
+        if ($cuantos == 0) {
+            $id_sigue = 1; 
+        }
+        else{
+            $id_sigue = $consulta[0]->id_infcliente + 1;
+        }
+        $estados = estados::orderBy('nombre_estado')->get();
+        $users = User::orderBy('id')->get();
+        $vias = vias::orderBy('tipo_via')->get();
+
+
+
+        return view ('cliente/cliente')
+            ->with('id_sigue',$id_sigue)
+            ->with('estados',$estados)
+            ->with('vias',$vias)
+            ->with('users',$users);
+              
+
+
     }
 
     public function pago()
@@ -115,7 +187,6 @@ class informacionclientescontroller extends Controller
 
     public function guardarcliente(Request $request)
     {     
-        
          $this->validate($request,[
             'nombre_cliente'       => 'required|regex:/^[A-Z][A-Z,a-z, ,ü, é, á, í, ó, ú, ñ]+$/',
             'apellido_pcliente'    => 'required|regex:/^[A-Z][A-Z,a-z, ,ü, é, á, í, ó, ú, ñ]+$/',
@@ -127,9 +198,7 @@ class informacionclientescontroller extends Controller
             
             'codigo_postalcliente' => 'required|regex:/^[0-9]{5}$/',
             'email_cliente'        => 'required|email',
-            'celular_cliente'      => 'required|regex:/^[0-9]{10}$/',
-           
-             
+            'celular_cliente'      => 'required|regex:/^[0-9]{10}$/',             
         ]);
 
 
@@ -163,7 +232,8 @@ class informacionclientescontroller extends Controller
             //return $request->input();
        
     }
-     public function editar_infcliente($id_infcliente)
+
+    public function editar_infcliente($id_infcliente)
     {
         //$data = informacionclientes::withTrashed()->find($id_infcliente);
 

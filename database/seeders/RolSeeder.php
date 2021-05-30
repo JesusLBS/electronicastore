@@ -33,6 +33,7 @@ class RolSeeder extends Seeder
             ]
 
         ]);
+        
     }
 }
  

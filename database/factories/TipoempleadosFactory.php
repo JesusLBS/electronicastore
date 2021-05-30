@@ -1,0 +1,30 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\tipoempleados;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class TipoempleadosFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = tipoempleados::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'nombre_tipoempleado'  => $this->faker->bothify('Cajero ???????'),
+            'created_at'      => $this->faker->dateTime($max = 'now', $timezone = null),
+            'updated_at'      => $this->faker->dateTime($max = 'now', $timezone = null)
+        ];
+    }
+}

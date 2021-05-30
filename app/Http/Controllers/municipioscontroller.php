@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\informacionclientes;
 use App\Models\municipios;
+use DataTables;
 use Session; 
 
 class municipioscontroller extends Controller

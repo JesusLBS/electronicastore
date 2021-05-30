@@ -27,8 +27,8 @@
            
            <br>
             <center>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" name="btndesactivarp" id="btndesactivarp" class="btn btn-outline-danger" >Desactivar</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No,Cerrar</button>
+              <button type="button" name="btndesactivarp" id="btndesactivarp" class="btn btn-outline-danger" >Si,Desactivar</button>
             </center>
         </div>
     </div> 

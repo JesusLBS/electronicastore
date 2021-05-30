@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/getusers', [App\Http\Controllers\electronicacontroller::class, 'getusers'])->name('getusers');
+//Route::get('getusers', 'App\Http\Controllers\electronicacontroller@getusers');
+
+Route::get('/usuarios',function(){
+    return User::all();
+ });

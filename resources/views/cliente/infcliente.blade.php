@@ -91,7 +91,7 @@
 
 
         <div class="form-group">
-                    <label for="apellido">Direccion:
+                    <label for="direccion_cliente">Direccion:
                     <label for="direccion_cliente" class="col-md-1 col-form-label text-md-right asterisco">*</label>
                       @if($errors->first('direccion_cliente'))
                       <p class="text-danger">{{$errors->first('direccion_cliente')}}</p>

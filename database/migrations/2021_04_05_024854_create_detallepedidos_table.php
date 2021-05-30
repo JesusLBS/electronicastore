@@ -18,7 +18,7 @@ class CreateDetallepedidosTable extends Migration
 
             $table->string('precio_producto');
             $table->string('cantidad');
-            $table->string('subttal');
+            $table->string('subtotal');
 
  
             $table->unsignedBigInteger('id_pedido');

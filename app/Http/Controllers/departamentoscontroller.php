@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\departamentos;
-use App\Models\empleados; 
+use App\Models\empleados;
+use DataTables;
 use Session;
+use PDF;
 
 class departamentoscontroller extends Controller
 {
@@ -19,8 +21,9 @@ class departamentoscontroller extends Controller
         $this->middleware('auth');
     }
     
-    public function index()
+    public function index(Request $request)
     {
+        /*
         $consulta = departamentos::orderBy('id_departamento','DESC')
                    ->take(1)->get();
         $cuantos =count($consulta);
@@ -39,8 +42,58 @@ class departamentoscontroller extends Controller
 
         return view ('departamento/index')
             ->with('id_sigue',$id_sigue)
-            ->with('consulta2',$consulta2);
+            ->with('consulta2',$consulta2);*/
+        if ($request->ajax()) {
+
+            $data = departamentos::withTrashed()->select(['id_departamento','nombre_departamento'])
+                                       ->get();
+
+       return DataTables::of($data)
+               ->addIndexColumn()
+               ->addColumn('btn',function($data){
+                $btn = '&nbsp;';
+
+                if ($data->deleted_at) {
+                   $btn .= '<button type="button" name="activauser"  id="'.$data->id_departamento.'" class="activauser btn btn-success  btn-sm" data-toggle="modal" data-target="#mactivarp">Activar</button>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="eliminaruser"  id="'.$data->id_departamento.'" class="eliminaruser btn btn-danger  btn-sm" data-toggle="modal" data-target="#mborrarp">Eliminar</button>';
+                }else{
+                   if ($data->estatus == 'Sin Definir')  {
+                   $btn .= '<a href="javascript:void(0)" onclick="edituser('.$data->id_departamento.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#staticBackdrop">Definir Pedido</button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_departamento.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+                   else{
+                   $btn .= '<a href="javascript:void(0)" onclick="showpedido('.$data->id_departamento.')"><button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#detallepedido"><span class="ti-pencil-alt" title="Editar">Editar</span></button></a>';
+                   $btn .= '&nbsp;&nbsp';
+                   $btn .= '<button type="button" name="desactivaruser" id="'.$data->id_departamento.'" class="desactivaruser btn btn-warning btn-sm" data-toggle="modal" data-target="#mdesactivaru">Desactivar</button>';
+                   }
+                }
+
+               return $btn;
+           })
+           ->rawColumns(['btn'])
+           ->make(true);
+       }
+
+
+        $consulta = departamentos::orderBy('id_departamento','DESC')
+                   ->take(1)->get();
+        $cuantos =count($consulta);
+
+        if ($cuantos == 0) {
+            $id_sigue = 1;
+        }
+        else{
+            $id_sigue = $consulta[0]->id_departamento + 1;
+        }
+
+
+        return view ('departamento/index')
+            ->with('id_sigue',$id_sigue);      
     }
+
+
 
     public function desactivardepartamento($id_departamento)
     {

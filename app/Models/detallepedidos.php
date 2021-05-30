@@ -13,7 +13,7 @@ class detallepedidos extends Model
 
     protected $table="detallepedidos";
 	protected $primaryKey = 'id_detallepedido';                 
-    protected $fillable=["id_detallepedido", "precio_producto", "cantidad","subttal","id_pedido","id_producto","deleted_at"];
+    protected $fillable=["id_detallepedido", "precio_producto", "cantidad","subtotal","id_pedido","id_producto","deleted_at"];
 }
 
 

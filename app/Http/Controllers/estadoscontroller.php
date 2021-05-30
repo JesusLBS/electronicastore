@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\informacionclientes;
 use App\Models\estados;
+use DataTables;
 use Session;
 
 class estadoscontroller extends Controller

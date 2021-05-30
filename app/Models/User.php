@@ -38,6 +38,18 @@ class User extends Authenticatable
         "activo",
         "id_rol", 
     ];
+    /*
+name
+email
+password
+celular
+img
+aceptotc_c
+token_login
+deleted_at
+activo
+id_rol
+    */
 
     /**
      * The attributes that should be hidden for arrays.

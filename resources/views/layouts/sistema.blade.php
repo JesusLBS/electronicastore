@@ -50,6 +50,15 @@
 </head>
 
 <body>
+
+@if(Session::has('mensajelogin'))
+<script>
+        swal("Holaa..!","{!!Session::get('mensajelogin')!!}","success",{
+            button:"OK",
+        })
+</script>
+@endif
+
     <!-- Left Panel --> 
     
     @include('include.leftpanelmenu')
@@ -72,7 +81,7 @@
 
 
 
- 
+
 
 @if(Session::has('mensajed'))
 <script>
@@ -134,7 +143,38 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="{{asset('admin/js/init/fullcalendar-init.js')}}"></script>
 
-    
+    <script type="text/javascript">
+        //Hora
+//----------------------------------------------------------------
+    function mueveReloj(){ 
+        h = new Date() 
+
+
+        hora     = ((h.getHours() < 10) ? "0" : "") + h.getHours(),
+        minuto   = ((h.getMinutes() < 10) ? "0" : "") + h.getMinutes(),
+        segundo  = ((h.getSeconds() < 10) ? "0" : "") + h.getSeconds()
+
+
+
+
+
+
+        horaImprimible = hora + " : " + minuto + " : " + segundo 
+
+        document.form_reloj.hora_pedido0.value = horaImprimible 
+
+        //La función se tendrá que llamar así misma para que sea dinámica, 
+        //de esta forma:
+
+        setTimeout(mueveReloj,1000)
+    }
+
+
+
+ window.onload = function(){
+        mueveReloj();
+      }
+    </script>
 <!------------------------------------------------------------------------------------------------------------------------------->
 
                <!------------------------------------------------------------------------------------------------------------------------------------------->
