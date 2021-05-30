@@ -152,10 +152,13 @@
             
         </div> 
 
- <a href="{{url('pdfuser')}}">
+<a href="{{url('pdfuser')}}">
   <button class="btn btn-outline-danger">PDF</button>
- </a>
- <hr>
+</a>
+<a href="{{url('exportuser')}}">
+  <button class="btn btn-outline-success">Excel</button>
+</a>
+<hr>
     <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
 
       <div class="row">
@@ -178,7 +181,15 @@
                     <th>Opciones</th>
                   </tr>
                 </thead>
-              </table>
+              </table> 
+              <br>
+              <hr>
+              <form action="{{url('importuser')}}" method="POST" enctype="multipart/form-data">
+              @csrf
+                  <input type="file" name="file"  class="form-control" require>
+                  <br>
+                  <button class="btn btn-outline-success">Importar Excel(.csv)</button>
+              </form>
             </div>
           </div>
         </div>

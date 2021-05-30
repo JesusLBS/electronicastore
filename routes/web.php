@@ -159,6 +159,13 @@ Route::get('editar_user2/{id}',[usercontroller::class,'editar_user2'])->name('ed
 Route::post('/userupdate',[usercontroller::class,'userupdate'])->name('userupdate');
 //PDF
 Route::get('pdfuser',[usercontroller::class,'pdfuser'])->name('pdfuser');
+//Excel
+Route::get('exportuser/',[usercontroller::class,'export'])->name('exportuser');
+Route::post('importuser/',[usercontroller::class,'import'])->name('importuser');
+
+
+
+
 
 /*Vias*/
 Route::get('electronica_via',[viascontroller::class,'index'])->name('via');

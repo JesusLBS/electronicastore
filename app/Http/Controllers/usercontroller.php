@@ -7,27 +7,43 @@ use App\Models\User;
 use App\Models\roles;
 use App\Models\informacionclientes;
 use Illuminate\Support\Facades\Hash;
-use Session;
-use Auth;
-use DataTables;
-use PDF;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Session;
+use Auth; 
+use DataTables;
+use PDF;
+
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Excel;
 
 class usercontroller extends Controller
 {
+    private $excel;
+    public function __construct(Excel $excel){
+        $this->excel = $excel;
+        //$this->middleware('auth');
+    }
+
+    public function export()
+    {
+        return $this->excel->download(new UsersExport, 'users.xlsx');
+         //return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    public function import() 
+    {
+        $this->excel->import(new UsersImport, request()->file('file'));
+        return back();
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
 
     public function index(Request $request)
     {
