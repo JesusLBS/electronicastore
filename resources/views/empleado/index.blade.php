@@ -47,9 +47,13 @@
 
  
     <!-------------------------------------------------- Boton Agregar Modal ---------------------------------------------------------------->
-    <a href="{{url('pdfempleado')}}">
+<a href="{{url('pdfempleado')}}">
   <button class="btn btn-outline-danger">PDF</button>
- </a>
+</a>
+
+<a href="{{url('exportempleado')}}">
+  <button class="btn btn-outline-success">Excel</button>
+</a>
  <hr>
  <!--------------------------------------------------*---------------------------------------------------------------->
       <div class="row">
@@ -72,6 +76,12 @@
                   </tr>
                 </thead>
               </table>
+              <form action="{{url('importempleado')}}" method="POST" enctype="multipart/form-data">
+              @csrf
+                  <input type="file" name="file"  class="form-control" require>
+                  <br>
+                  <button class="btn btn-outline-success">Importar Excel</button>
+              </form>
             </div>
           </div>
         </div>

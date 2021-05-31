@@ -14,21 +14,36 @@ use Session;
 use PDF;
 
 
-
+use App\Exports\EmpleadosExport;
+use App\Imports\EmpleadosImport;
+use Maatwebsite\Excel\Excel;
  
-
+ 
 
 class empleadoscontroller extends Controller
 {
+    private $excel;
+    public function __construct(Excel $excel){
+        $this->excel = $excel;
+        $this->middleware('auth');
+    }
+
+    public function export()
+    {
+        return $this->excel->download(new EmpleadosExport, 'empleados.xlsx');
+         //return Excel::download(new EmpleadosExport, 'empleados.xlsx');
+    }
+
+    public function import() 
+    {
+        $this->excel->import(new EmpleadosImport, request()->file('file'));
+        return back();
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */ 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     
     public function index(Request $request)
     {

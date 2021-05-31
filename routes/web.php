@@ -385,7 +385,9 @@ Route::post('activarempleado/{id_empleado}',[empleadoscontroller::class,'activar
 Route::post('borrarempleado/{id_empleado}',[empleadoscontroller::class,'borrarempleado'])->name('borrarempleado');
 //PDF
 Route::get('pdfempleado',[empleadoscontroller::class,'pdfempleado'])->name('pdfempleado');
-
+//Excel
+Route::get('exportempleado/',[empleadoscontroller::class,'export'])->name('exportempleado');
+Route::post('importempleado/',[empleadoscontroller::class,'import'])->name('importempleado');
 
 
 
