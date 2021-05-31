@@ -24,7 +24,7 @@ class usercontroller extends Controller
     private $excel;
     public function __construct(Excel $excel){
         $this->excel = $excel;
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function export()
